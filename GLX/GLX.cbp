@@ -45,17 +45,17 @@
 				</Linker>
 			</Target>
 		</Build>
-		<Unit filename="Exports.cpp" />
-		<Unit filename="Exports.hpp" />
-		<Unit filename="Platform.cpp" />
-		<Unit filename="Platform.hpp" />
-		<Unit filename="Serialization.cpp" />
-		<Unit filename="Serialization.hpp" />
-		<Unit filename="SharedMemory.cpp" />
-		<Unit filename="SharedMemory.hpp" />
-		<Unit filename="Structures.cpp" />
-		<Unit filename="Structures.hpp" />
-		<Unit filename="main.cpp" />
+		<Unit filename="src/Exports.cpp" />
+		<Unit filename="src/Exports.hpp" />
+		<Unit filename="src/Platform.cpp" />
+		<Unit filename="src/Platform.hpp" />
+		<Unit filename="src/Serialization.cpp" />
+		<Unit filename="src/Serialization.hpp" />
+		<Unit filename="src/SharedMemory.cpp" />
+		<Unit filename="src/SharedMemory.hpp" />
+		<Unit filename="src/Structures.cpp" />
+		<Unit filename="src/Structures.hpp" />
+		<Unit filename="src/main.cpp" />
 		<Extensions>
 			<code_completion />
 			<envvars />
