@@ -1,0 +1,203 @@
+# depslib dependency file v1.0
+1373611455 source:c:\users\brandon\desktop\glx\main.cpp
+	"Exports.hpp"
+
+1373611245 c:\users\brandon\desktop\glx\exports.hpp
+	<cstring>
+	<vector>
+	<memory>
+	"Platform.hpp"
+	"SharedMemory.hpp"
+
+1373599504 c:\users\brandon\desktop\glx\platform.hpp
+	<windows.h>
+	<dlfcn.h>
+	<string>
+	<cstdint>
+	<stdexcept>
+
+1373599547 source:c:\users\brandon\desktop\glx\platform.cpp
+	"Platform.hpp"
+
+1373602609 source:c:\users\brandon\desktop\glx\sharedmemory.cpp
+	"SharedMemory.hpp"
+
+1373602594 c:\users\brandon\desktop\glx\sharedmemory.hpp
+	<windows.h>
+	<sys/types.h>
+	<sys/mman.h>
+	<dlfcn.h>
+	<fcntl.h>
+	<unistd.h>
+	<tchar.h>
+	<iostream>
+	<map>
+
+1373611402 source:c:\users\brandon\desktop\glx\exports.cpp
+	"Exports.hpp"
+
+1374995376 source:c:\users\brandon\desktop\colour only opengl\glx\exports.cpp
+	"Exports.hpp"
+
+1374994486 c:\users\brandon\desktop\colour only opengl\glx\exports.hpp
+	<cstring>
+	<vector>
+	<memory>
+	"Platform.hpp"
+	"Structures.hpp"
+	"SharedMemory.hpp"
+
+1373611455 source:c:\users\brandon\desktop\colour only opengl\glx\main.cpp
+	"Exports.hpp"
+
+1373739869 c:\users\brandon\desktop\colour only opengl\glx\platform.hpp
+	<windows.h>
+	<dlfcn.h>
+	<string>
+	<cstdint>
+	<stdexcept>
+
+1373742141 c:\users\brandon\desktop\colour only opengl\glx\sharedmemory.hpp
+	<windows.h>
+	<sys/types.h>
+	<sys/mman.h>
+	<dlfcn.h>
+	<fcntl.h>
+	<unistd.h>
+	<tchar.h>
+	<iostream>
+	<map>
+
+1373739941 source:c:\users\brandon\desktop\colour only opengl\glx\platform.cpp
+	"Platform.hpp"
+
+1373742134 source:c:\users\brandon\desktop\colour only opengl\glx\sharedmemory.cpp
+	"SharedMemory.hpp"
+
+1374599932 source:c:\users\brandon\desktop\colour only opengl\glx\serialization.cpp
+	"Serialization.hpp"
+
+1374654937 c:\users\brandon\desktop\colour only opengl\glx\serialization.hpp
+	<vector>
+	<sstream>
+	<iostream>
+	<list>
+	<array>
+
+1374692276 source:c:\users\brandon\desktop\colour only opengl\glx\structures.cpp
+	"Structures.hpp"
+
+1374993198 c:\users\brandon\desktop\colour only opengl\glx\structures.hpp
+	<array>
+	"Serialization.hpp"
+
+1373611455 source:c:\users\brandon\documents\github\glx-colour\glx\main.cpp
+	"Exports.hpp"
+
+1376070281 c:\users\brandon\documents\github\glx-colour\glx\exports.hpp
+	<cstring>
+	<vector>
+	<memory>
+	"Platform.hpp"
+	"Structures.hpp"
+	"SharedMemory.hpp"
+
+1373739869 c:\users\brandon\documents\github\glx-colour\glx\platform.hpp
+	<windows.h>
+	<dlfcn.h>
+	<string>
+	<cstdint>
+	<stdexcept>
+
+1376070083 c:\users\brandon\documents\github\glx-colour\glx\structures.hpp
+	<array>
+	"Serialization.hpp"
+
+1374654937 c:\users\brandon\documents\github\glx-colour\glx\serialization.hpp
+	<vector>
+	<sstream>
+	<iostream>
+	<list>
+	<array>
+
+1373742141 c:\users\brandon\documents\github\glx-colour\glx\sharedmemory.hpp
+	<windows.h>
+	<sys/types.h>
+	<sys/mman.h>
+	<dlfcn.h>
+	<fcntl.h>
+	<unistd.h>
+	<tchar.h>
+	<iostream>
+	<map>
+
+1373739941 source:c:\users\brandon\documents\github\glx-colour\glx\platform.cpp
+	"Platform.hpp"
+
+1374599932 source:c:\users\brandon\documents\github\glx-colour\glx\serialization.cpp
+	"Serialization.hpp"
+
+1373742134 source:c:\users\brandon\documents\github\glx-colour\glx\sharedmemory.cpp
+	"SharedMemory.hpp"
+
+1374692276 source:c:\users\brandon\documents\github\glx-colour\glx\structures.cpp
+	"Structures.hpp"
+
+1376071001 source:c:\users\brandon\documents\github\glx-colour\glx\exports.cpp
+	"Exports.hpp"
+
+1376071001 source:c:\users\brandon\documents\github\glx\glx\exports.cpp
+	"Exports.hpp"
+
+1376070281 c:\users\brandon\documents\github\glx\glx\exports.hpp
+	<cstring>
+	<vector>
+	<memory>
+	"Platform.hpp"
+	"Structures.hpp"
+	"SharedMemory.hpp"
+
+1373739869 c:\users\brandon\documents\github\glx\glx\platform.hpp
+	<windows.h>
+	<dlfcn.h>
+	<string>
+	<cstdint>
+	<stdexcept>
+
+1376070083 c:\users\brandon\documents\github\glx\glx\structures.hpp
+	<array>
+	"Serialization.hpp"
+
+1374654937 c:\users\brandon\documents\github\glx\glx\serialization.hpp
+	<vector>
+	<sstream>
+	<iostream>
+	<list>
+	<array>
+
+1373742141 c:\users\brandon\documents\github\glx\glx\sharedmemory.hpp
+	<windows.h>
+	<sys/types.h>
+	<sys/mman.h>
+	<dlfcn.h>
+	<fcntl.h>
+	<unistd.h>
+	<tchar.h>
+	<iostream>
+	<map>
+
+1373611455 source:c:\users\brandon\documents\github\glx\glx\main.cpp
+	"Exports.hpp"
+
+1373739941 source:c:\users\brandon\documents\github\glx\glx\platform.cpp
+	"Platform.hpp"
+
+1374599932 source:c:\users\brandon\documents\github\glx\glx\serialization.cpp
+	"Serialization.hpp"
+
+1373742134 source:c:\users\brandon\documents\github\glx\glx\sharedmemory.cpp
+	"SharedMemory.hpp"
+
+1374692276 source:c:\users\brandon\documents\github\glx\glx\structures.cpp
+	"Structures.hpp"
+
