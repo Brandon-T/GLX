@@ -174,6 +174,16 @@ void ProcessRequests()
                 }
                 break;
 
+                case GLX_SaveTexture:
+                {
+                    std::uint32_t TextureID = ReadPointer<std::uint32_t>(Data);
+                    std::uint32_t TextureType = ReadPointer<std::uint32_t>(Data);
+                    InfoLogger.Save(TextureID, TextureType);
+                    SharedHookData->SetEventSignal(RequestEventName, false);
+                    SharedHookData->SetEventSignal(ReplyEventName, true);
+                }
+                break;
+
                 default:
                     SharedHookData->SetEventSignal(RequestEventName, false);
                     break;

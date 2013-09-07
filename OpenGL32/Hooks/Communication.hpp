@@ -39,6 +39,7 @@
 #define GLX_MapCoords       7
 #define GLX_Debug           8
 #define GLX_ColourBuffer    9
+#define GLX_SaveTexture     10
 
 
 extern bool Initialized;

@@ -30,6 +30,7 @@
 #define GLX_MapCoords       7
 #define GLX_Debug           8
 #define GLX_ColourBuffer    9
+#define GLX_SaveTexture     10
 
 
 typedef struct
@@ -62,6 +63,7 @@ typedef struct
 
 typedef struct
 {
+    std::uint32_t TextureID;
     std::uint32_t Colour;
     int X, Y;
     char Letter;

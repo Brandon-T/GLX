@@ -38,7 +38,8 @@ char* Exports[] = {
     (char*)"GLXMap", (char*)"Function GLXMap(var Width, Height: Integer; var X, Y: array[0..3] of Single): Pointer;",
     (char*)"GLXMapCoords", (char*)"Procedure GLXMapCoords(var X, Y: array[0..3] of single);",
     (char*)"GLXDebug", (char*)"Procedure GLXDebug(Mode, HudID: Cardinal; X1, Y1, X2, Y2: Integer);",
-    (char*)"GLXSetColourCapture", (char*)"Procedure GLXSetColourCapture(Enable: Boolean);"
+    (char*)"GLXSetColourCapture", (char*)"Procedure GLXSetColourCapture(Enable: Boolean);",
+    (char*)"GLXSaveTexture", (char*)"Procedure GLXSaveTexture(TextureID: Integer; Rectangle: Boolean);"
 };
 
 extern "C" bool __declspec(dllexport) GLXSetup(int ProcessID)
@@ -213,6 +214,17 @@ void GLXSetColourCapture(bool Enabled)
     char* Data = static_cast<char*>(SharedHookData->GetDataPointer());
     WritePointer(Data, GLX_ColourBuffer);
     WritePointer(Data, Enabled ? 1 : 0);
+    SharedHookData->SetEventSignal(RequestEventName, true);
+    SharedHookData->OpenSingleEvent(ReplyEventName, true, true);
+    SharedHookData->SetEventSignal(ReplyEventName, false);
+}
+
+void GLXSaveTexture(std::uint32_t TextureID, bool glRectangleTexture)
+{
+    char* Data = static_cast<char*>(SharedHookData->GetDataPointer());
+    WritePointer(Data, GLX_SaveTexture);
+    WritePointer(Data, TextureID);
+    WritePointer(Data, glRectangleTexture ? 0x84F5 : 0x0DE1);
     SharedHookData->SetEventSignal(RequestEventName, true);
     SharedHookData->OpenSingleEvent(ReplyEventName, true, true);
     SharedHookData->SetEventSignal(ReplyEventName, false);

@@ -25,9 +25,11 @@
 #include <GL/glext.h>
 #include <map>
 #include <cstring>
+#include <fstream>
 #include "Math.hpp"
 #include "MathEx.hpp"
 #include "Serialization.hpp"
+#include "Graphics.hpp"
 
 struct Deleter
 {
@@ -135,6 +137,7 @@ struct Font
         bool Rendering = false, LastFont = false;
 
     public:
+        std::uint32_t TextureID = 0;
         std::uint32_t ID = 0;
         std::uint32_t Colour;
         int X, Y;
@@ -145,6 +148,7 @@ struct Font
         static std::vector<Font> Fonts;
         static std::vector<Font> RenderedFonts;
 
+        void LogBindTexture(std::uint32_t texture);
         void LogGenList(std::uint32_t Range);
         void LogCallList(std::uint32_t List);
         void LogVertices(int x, int y);
@@ -165,6 +169,7 @@ class Logger
         Matrices matrices;
 
         void Reset();
+        void Save(std::uint32_t TextureID, std::uint32_t TextureType = GL_TEXTURE_2D);
 };
 
 extern Logger InfoLogger;

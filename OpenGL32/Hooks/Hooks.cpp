@@ -33,6 +33,7 @@ void GLHook_glBindTexture(GLenum target, GLuint texture)
 {
     InfoLogger.map.LogBindTexture(target, texture);
     InfoLogger.texture.LogBindTexture(target, texture);
+    InfoLogger.font.LogBindTexture(texture);
 	ptr_glBindTexture(target, texture);
 }
 

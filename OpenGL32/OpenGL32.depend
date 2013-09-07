@@ -1,7 +1,8 @@
 # depslib dependency file v1.0
-1370320313 source:c:\users\brandon\desktop\opengl32\main.cpp
+1376007654 source:c:\users\brandon\desktop\opengl32\main.cpp
 	<windows.h>
-	"Headers/Exports.hpp"
+	"Hooks/Exports.hpp"
+	"Hooks/Communication.hpp"
 
 1370559312 source:c:\users\brandon\desktop\opengl32\implementations\math.cpp
 	"../Headers/Math.hpp"
@@ -79,30 +80,48 @@
 	<vector>
 	<cmath>
 
-1370238285 source:c:\users\brandon\desktop\opengl32\hooks\communication.cpp
+1378529178 source:c:\users\brandon\desktop\opengl32\hooks\communication.cpp
 	"Communication.hpp"
 
-1370238292 c:\users\brandon\desktop\opengl32\hooks\communication.hpp
+1378529045 c:\users\brandon\desktop\opengl32\hooks\communication.hpp
 	<iostream>
-	"../Headers/SharedMemory.hpp"
+	<GL/gl.h>
+	<GL/glext.h>
+	<memory>
+	"Structures.hpp"
+	"SharedMemory.hpp"
+	"Debugger.hpp"
 
-1370315922 source:c:\users\brandon\desktop\opengl32\hooks\structures.cpp
+1378537806 source:c:\users\brandon\desktop\opengl32\hooks\structures.cpp
 	"Structures.hpp"
 
-1370559285 c:\users\brandon\desktop\opengl32\hooks\structures.hpp
+1378535716 c:\users\brandon\desktop\opengl32\hooks\structures.hpp
 	<cmath>
 	<cstdint>
 	<vector>
-	"../Headers/Math.hpp"
-	"../Headers/MathEx.hpp"
-
-1370458055 source:c:\users\brandon\desktop\opengl32\hooks\hooks.cpp
-	"Hooks.hpp"
-
-1370457532 c:\users\brandon\desktop\opengl32\hooks\hooks.hpp
 	<GL/gl.h>
 	<GL/glext.h>
-	"../Headers/Exports.hpp"
+	<map>
+	<cstring>
+	<fstream>
+	"Math.hpp"
+	"MathEx.hpp"
+	"Serialization.hpp"
+	"Graphics.hpp"
+
+1378528932 source:c:\users\brandon\desktop\opengl32\hooks\hooks.cpp
+	"Hooks.hpp"
+
+1376007445 c:\users\brandon\desktop\opengl32\hooks\hooks.hpp
+	<GL/gl.h>
+	<GL/glext.h>
+	<memory>
+	"Exports.hpp"
+	"System.hpp"
+	"Math.hpp"
+	"Structures.hpp"
+	"SmartPlugin.hpp"
+	"Communication.hpp"
 
 1376070827 source:c:\users\brandon\desktop\glhook\opengl32\hooks\communication.cpp
 	"Communication.hpp"
@@ -424,4 +443,320 @@
 	"Graphics.hpp"
 	"Render.hpp"
 	"Structures.hpp"
+
+1376007545 source:c:\users\brandon\documents\github\glx\opengl32\hooks\bufferhook.cpp
+	"BufferHook.hpp"
+	<fstream>
+
+1376007394 c:\users\brandon\documents\github\glx\opengl32\hooks\bufferhook.hpp
+	<vector>
+	<iostream>
+	<GL/gl.h>
+	<GL/glext.h>
+	"Exports.hpp"
+	"Math.hpp"
+
+1376007433 c:\users\brandon\documents\github\glx\opengl32\hooks\exports.hpp
+	<GL/gl.h>
+	<GL/glext.h>
+	<stdexcept>
+	"Platform.hpp"
+	"Render.hpp"
+
+1376007466 c:\users\brandon\documents\github\glx\opengl32\hooks\platform.hpp
+	<windows.h>
+	<dlfcn.h>
+	<string>
+	<cstdint>
+	<stdexcept>
+
+1376007473 c:\users\brandon\documents\github\glx\opengl32\hooks\render.hpp
+	<GL/gl.h>
+	<GL/glext.h>
+	<cstdint>
+	<string>
+	<vector>
+	<cmath>
+	"System.hpp"
+
+1376007528 c:\users\brandon\documents\github\glx\opengl32\hooks\system.hpp
+	<string>
+
+1376007450 c:\users\brandon\documents\github\glx\opengl32\hooks\math.hpp
+	<GL/gl.h>
+	<GL/glu.h>
+	<cstdint>
+	<cmath>
+	<string>
+	<vector>
+	<algorithm>
+	"MathEx.hpp"
+
+1376007459 c:\users\brandon\documents\github\glx\opengl32\hooks\mathex.hpp
+	<array>
+	<cstring>
+
+1376070827 source:c:\users\brandon\documents\github\glx\opengl32\hooks\communication.cpp
+	"Communication.hpp"
+
+1376070009 c:\users\brandon\documents\github\glx\opengl32\hooks\communication.hpp
+	<iostream>
+	<GL/gl.h>
+	<GL/glext.h>
+	<memory>
+	"Structures.hpp"
+	"SharedMemory.hpp"
+	"Debugger.hpp"
+
+1376007520 c:\users\brandon\documents\github\glx\opengl32\hooks\structures.hpp
+	<cmath>
+	<cstdint>
+	<vector>
+	<GL/gl.h>
+	<GL/glext.h>
+	<map>
+	<cstring>
+	"Math.hpp"
+	"MathEx.hpp"
+	"Serialization.hpp"
+
+1376007479 c:\users\brandon\documents\github\glx\opengl32\hooks\serialization.hpp
+	<vector>
+	<sstream>
+	<iostream>
+	<list>
+	<array>
+
+1376007488 c:\users\brandon\documents\github\glx\opengl32\hooks\sharedmemory.hpp
+	<windows.h>
+	<sys/types.h>
+	<sys/mman.h>
+	<dlfcn.h>
+	<fcntl.h>
+	<unistd.h>
+	<tchar.h>
+	<iostream>
+	<map>
+
+1376007424 c:\users\brandon\documents\github\glx\opengl32\hooks\debugger.hpp
+	<cstdint>
+	<algorithm>
+	"Graphics.hpp"
+	"Render.hpp"
+	"Structures.hpp"
+
+1376007439 c:\users\brandon\documents\github\glx\opengl32\hooks\graphics.hpp
+	<GL/gl.h>
+	<GL/glext.h>
+	<iostream>
+	<cstring>
+	<vector>
+
+1376007559 source:c:\users\brandon\documents\github\glx\opengl32\hooks\debugger.cpp
+	"Debugger.hpp"
+
+1376007571 source:c:\users\brandon\documents\github\glx\opengl32\hooks\exports.cpp
+	"Exports.hpp"
+
+1376007581 source:c:\users\brandon\documents\github\glx\opengl32\hooks\graphics.cpp
+	"Graphics.hpp"
+
+1376007597 source:c:\users\brandon\documents\github\glx\opengl32\hooks\math.cpp
+	"Math.hpp"
+
+1376007606 source:c:\users\brandon\documents\github\glx\opengl32\hooks\platform.cpp
+	"Platform.hpp"
+
+1376007615 source:c:\users\brandon\documents\github\glx\opengl32\hooks\render.cpp
+	"Render.hpp"
+
+1376007624 source:c:\users\brandon\documents\github\glx\opengl32\hooks\serialization.cpp
+	"Serialization.hpp"
+
+1376007630 source:c:\users\brandon\documents\github\glx\opengl32\hooks\sharedmemory.cpp
+	"SharedMemory.hpp"
+
+1376194275 source:c:\users\brandon\documents\github\glx\opengl32\hooks\smartjni.cpp
+	"SmartPlugin.hpp"
+
+1376007512 c:\users\brandon\documents\github\glx\opengl32\hooks\smartplugin.hpp
+	"Graphics.hpp"
+
+1376031762 source:c:\users\brandon\documents\github\glx\opengl32\hooks\structures.cpp
+	"Structures.hpp"
+
+1376007654 source:c:\users\brandon\documents\github\glx\opengl32\main.cpp
+	<windows.h>
+	"Hooks/Exports.hpp"
+	"Hooks/Communication.hpp"
+
+1376007545 source:c:\users\brandon\desktop\opengl32\hooks\bufferhook.cpp
+	"BufferHook.hpp"
+	<fstream>
+
+1376007394 c:\users\brandon\desktop\opengl32\hooks\bufferhook.hpp
+	<vector>
+	<iostream>
+	<GL/gl.h>
+	<GL/glext.h>
+	"Exports.hpp"
+	"Math.hpp"
+
+1376007433 c:\users\brandon\desktop\opengl32\hooks\exports.hpp
+	<GL/gl.h>
+	<GL/glext.h>
+	<stdexcept>
+	"Platform.hpp"
+	"Render.hpp"
+
+1376007466 c:\users\brandon\desktop\opengl32\hooks\platform.hpp
+	<windows.h>
+	<dlfcn.h>
+	<string>
+	<cstdint>
+	<stdexcept>
+
+1376007473 c:\users\brandon\desktop\opengl32\hooks\render.hpp
+	<GL/gl.h>
+	<GL/glext.h>
+	<cstdint>
+	<string>
+	<vector>
+	<cmath>
+	"System.hpp"
+
+1376007528 c:\users\brandon\desktop\opengl32\hooks\system.hpp
+	<string>
+
+1376007450 c:\users\brandon\desktop\opengl32\hooks\math.hpp
+	<GL/gl.h>
+	<GL/glu.h>
+	<cstdint>
+	<cmath>
+	<string>
+	<vector>
+	<algorithm>
+	"MathEx.hpp"
+
+1376007459 c:\users\brandon\desktop\opengl32\hooks\mathex.hpp
+	<array>
+	<cstring>
+
+1376007479 c:\users\brandon\desktop\opengl32\hooks\serialization.hpp
+	<vector>
+	<sstream>
+	<iostream>
+	<list>
+	<array>
+
+1376007488 c:\users\brandon\desktop\opengl32\hooks\sharedmemory.hpp
+	<windows.h>
+	<sys/types.h>
+	<sys/mman.h>
+	<dlfcn.h>
+	<fcntl.h>
+	<unistd.h>
+	<tchar.h>
+	<iostream>
+	<map>
+
+1376007424 c:\users\brandon\desktop\opengl32\hooks\debugger.hpp
+	<cstdint>
+	<algorithm>
+	"Graphics.hpp"
+	"Render.hpp"
+	"Structures.hpp"
+
+1378535706 c:\users\brandon\desktop\opengl32\hooks\graphics.hpp
+	<GL/gl.h>
+	<GL/glext.h>
+	<iostream>
+	<cstring>
+	<vector>
+	"../Imaging/LodePNG.h"
+
+1376007559 source:c:\users\brandon\desktop\opengl32\hooks\debugger.cpp
+	"Debugger.hpp"
+
+1376007571 source:c:\users\brandon\desktop\opengl32\hooks\exports.cpp
+	"Exports.hpp"
+
+1376007581 source:c:\users\brandon\desktop\opengl32\hooks\graphics.cpp
+	"Graphics.hpp"
+
+1376007597 source:c:\users\brandon\desktop\opengl32\hooks\math.cpp
+	"Math.hpp"
+
+1376007606 source:c:\users\brandon\desktop\opengl32\hooks\platform.cpp
+	"Platform.hpp"
+
+1376007615 source:c:\users\brandon\desktop\opengl32\hooks\render.cpp
+	"Render.hpp"
+
+1376007624 source:c:\users\brandon\desktop\opengl32\hooks\serialization.cpp
+	"Serialization.hpp"
+
+1376007630 source:c:\users\brandon\desktop\opengl32\hooks\sharedmemory.cpp
+	"SharedMemory.hpp"
+
+1376194275 source:c:\users\brandon\desktop\opengl32\hooks\smartjni.cpp
+	"SmartPlugin.hpp"
+
+1376007512 c:\users\brandon\desktop\opengl32\hooks\smartplugin.hpp
+	"Graphics.hpp"
+
+1372570870 source:c:\users\brandon\desktop\opengl32\imaging\cynicimages.cpp
+	"CynicImages.hpp"
+
+1378533241 c:\users\brandon\desktop\opengl32\imaging\cynicimages.hpp
+	"Images.hpp"
+	<fstream>
+	"LodePNG.h"
+
+1375472102 c:\users\brandon\desktop\opengl32\imaging\images.hpp
+	<cmath>
+	<fstream>
+	"Defines.hpp"
+
+1372570870 c:\users\brandon\desktop\opengl32\imaging\defines.hpp
+	"Platforms.hpp"
+	<iostream>
+	<sstream>
+	<vector>
+	<cassert>
+	<cstring>
+
+1372570870 c:\users\brandon\desktop\opengl32\imaging\platforms.hpp
+	<windows.h>
+	<process.h>
+	<stdint.h>
+	<dirent.h>
+	<sys/stat.h>
+	<sys/types.h>
+	<unistd.h>
+	<dlfcn.h>
+	<cstdarg>
+	<string.h>
+	<fcntl.h>
+	<sys/mman.h>
+
+1372570870 c:\users\brandon\desktop\opengl32\imaging\lodepng.h
+	<string.h>
+	<vector>
+	<string>
+	"lodepng.h"
+	<iostream>
+	"lodepng.h"
+
+1375472097 source:c:\users\brandon\desktop\opengl32\imaging\images.cpp
+	"Images.hpp"
+
+1372570870 source:c:\users\brandon\desktop\opengl32\imaging\lodepng.cpp
+	"LodePNG.h"
+	<stdio.h>
+	<stdlib.h>
+	<fstream>
+
+1372570870 source:c:\users\brandon\desktop\opengl32\imaging\platforms.cpp
+	"Platforms.hpp"
 

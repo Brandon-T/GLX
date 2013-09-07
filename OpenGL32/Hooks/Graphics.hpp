@@ -23,6 +23,7 @@
 #include <iostream>
 #include <cstring>
 #include <vector>
+#include "../Imaging/LodePNG.h"
 
 void FlipImageBytes(void* In, void* &Out, int width, int height, uint32_t Bpp = 32);
 void EnableDrawing(bool &GLTexture2D, bool &GLRectangleTexture, bool &PointSmooth, float &PointSize);

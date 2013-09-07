@@ -250,7 +250,10 @@ void Texture::Log2DImageTexture(std::uint32_t Target, const void* Pixels, std::s
 }
 
 
-
+void Font::LogBindTexture(std::uint32_t texture)
+{
+    this->TextureID = texture;
+}
 
 void Font::LogGenList(std::uint32_t Range)
 {
@@ -363,6 +366,48 @@ void Logger::Reset()
     Model::Models.shrink_to_fit();
 }
 
+void Logger::Save(std::uint32_t TextureID, std::uint32_t TextureType)
+{
+    #if defined _WIN32 || defined _WIN64
+    CreateDirectory("Images/", nullptr);
+    #else
+    mkdir("Images/", S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH);
+    #endif
+
+
+    std::int32_t Width = 0;
+    std::int32_t Height = 0;
+    std::uint16_t BitsPerPixel = 32;
+    bool GLTexture2D = glIsEnabled(GL_TEXTURE_2D);
+    bool GLRectangleTexture = glIsEnabled(GL_TEXTURE_RECTANGLE);
+
+    glEnable(TextureType);
+    glBindTexture(TextureType, TextureID);
+    glGetTexLevelParameteriv(TextureType, 0, GL_TEXTURE_WIDTH, &Width);
+    glGetTexLevelParameteriv(TextureType, 0, GL_TEXTURE_HEIGHT, &Height);
+    std::vector<std::uint8_t> ImageData(((Width * BitsPerPixel + 31) / 32) * 4 * Height);
+    glGetTexImage(TextureType, 0, GL_BGRA, GL_UNSIGNED_BYTE, ImageData.data());
+    if (!GLTexture2D) glDisable(GL_TEXTURE_2D);
+    if (!GLRectangleTexture) glDisable(GL_TEXTURE_RECTANGLE);
+
+    std::vector<std::uint8_t> PngBuffer(ImageData.size());
+    for(std::int32_t I = 0; I < Height; ++I)
+    {
+        for(std::int32_t J = 0; J < Width; ++J)
+        {
+            std::size_t OldPos = (Height - I - 1) * (Width * 4) + 4 * J;
+            std::size_t NewPos = I * (Width * 4) + 4 * J;
+            PngBuffer[NewPos + 0] = ImageData[OldPos + 2];
+            PngBuffer[NewPos + 1] = ImageData[OldPos + 1];
+            PngBuffer[NewPos + 2] = ImageData[OldPos + 0];
+            PngBuffer[NewPos + 3] = ImageData[OldPos + 3];
+        }
+    }
+
+    std::vector<std::uint8_t> ImageBuffer;
+    lodepng::encode(ImageBuffer, PngBuffer, Width, Height);
+    lodepng::save_file(ImageBuffer, ("Images/" + std::to_string(TextureID) + ".png").c_str());
+}
 
 
 
@@ -393,7 +438,8 @@ Serialize& operator << (Serialize& Destination, const Texture &Source)
 
 Serialize& operator << (Serialize& Destination, const Font &Source)
 {
-    return Destination << Source.Colour
+    return Destination << Source.TextureID
+    << Source.Colour
     << Source.X
     << Source.Y
     << Source.Letter
@@ -449,7 +495,8 @@ DeSerialize& operator >> (DeSerialize& Source, Texture &Destination)
 
 DeSerialize& operator >> (DeSerialize& Source, Font &Destination)
 {
-    return Source >> Destination.Colour
+    return Source >> Destination.TextureID
+    >> Destination.Colour
     >> Destination.X
     >> Destination.Y
     >> Destination.Letter

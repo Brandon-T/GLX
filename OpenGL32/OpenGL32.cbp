@@ -88,6 +88,8 @@
 		<Unit filename="Hooks/Structures.cpp" />
 		<Unit filename="Hooks/Structures.hpp" />
 		<Unit filename="Hooks/System.hpp" />
+		<Unit filename="Imaging/LodePNG.cpp" />
+		<Unit filename="Imaging/LodePNG.h" />
 		<Unit filename="OpenGL32.def" />
 		<Unit filename="main.cpp" />
 		<Extensions>
