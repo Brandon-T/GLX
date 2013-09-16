@@ -26,8 +26,8 @@
 #include "../Imaging/LodePNG.h"
 
 void FlipImageBytes(void* In, void* &Out, int width, int height, uint32_t Bpp = 32);
-void EnableDrawing(bool &GLTexture2D, bool &GLRectangleTexture, bool &PointSmooth, float &PointSize);
-void DisableDrawing(bool GLTexture2D, bool GLRectangleTexture, bool PointSmooth, float PointSize);
+void EnableDrawing(bool &GLTexture2D, bool &GLRectangleTexture, bool &PointSmooth);
+void DisableDrawing(bool GLTexture2D, bool GLRectangleTexture, bool PointSmooth);
 GLuint LoadTexture(void* Buffer, int width, int height, GLenum Target);
 void DrawTexture(std::uint32_t Target, std::uint32_t ID, float X1, float Y1, float X2, float Y2, int Width, int Height);
 void BltMappedBuffer(void* buffer, int width, int height);

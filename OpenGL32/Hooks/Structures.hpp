@@ -26,6 +26,7 @@
 #include <map>
 #include <cstring>
 #include <fstream>
+#include <tuple>
 #include "Math.hpp"
 #include "MathEx.hpp"
 #include "Serialization.hpp"
@@ -118,9 +119,9 @@ struct Texture
         int X, Y, Count;
         int VX[4], VY[4];
         int Width, Height;
-        std::uint32_t Target, ID, BaseID, ColourID;
+        std::uint32_t Target, ID, BaseID, ColourID, ClippedID;
         static std::vector<Texture> Textures;
-        static std::multimap<uint32_t, std::pair<uint32_t, uint32_t>> IDMap;
+        static std::multimap<std::uint32_t, std::tuple<std::uint32_t, std::uint32_t, std::uint32_t>> IDMap;
 
         void LogBindTexture(std::uint32_t target, std::uint32_t texture);
         void LogVertices(int X, int Y);

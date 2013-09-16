@@ -41,6 +41,7 @@
 				<Compiler>
 					<Add option="-O3" />
 					<Add option="-std=c++11" />
+					<Add option="-Wfatal-errors" />
 					<Add option="-Wall" />
 					<Add option="-m32" />
 					<Add option="-DBUILD_DLL" />
@@ -60,8 +61,6 @@
 				</Linker>
 			</Target>
 		</Build>
-		<Unit filename="Hooks/BufferHook.cpp" />
-		<Unit filename="Hooks/BufferHook.hpp" />
 		<Unit filename="Hooks/Communication.cpp" />
 		<Unit filename="Hooks/Communication.hpp" />
 		<Unit filename="Hooks/Debugger.cpp" />

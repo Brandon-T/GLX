@@ -35,6 +35,7 @@ Serialize& operator << (Serialize& Destination, const Texture &Source)
 {
     return Destination << Source.ID
     << Source.ColourID
+    << Source.ClippedID
     << Source.X
     << Source.Y
     << Source.X1
@@ -92,6 +93,7 @@ DeSerialize& operator >> (DeSerialize& Source, Texture &Destination)
 {
     return Source >> Destination.ID
     >> Destination.ColourID
+    >> Destination.ClippedID
     >> Destination.X
     >> Destination.Y
     >> Destination.X1

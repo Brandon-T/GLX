@@ -21,8 +21,6 @@ const char Math::Base36Chars[] = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
 bool Math::EncodeBase36(std::uint32_t Value, std::string &Result)
 {
-    if (Value < 0) return false;
-
     std::vector<char> Data;
     while (Value != 0)
     {
@@ -213,29 +211,47 @@ bool Math::ScreenToWorld(float X, float Y, Vector3D<float> &World, int* ViewPort
     return false;
 }
 
-std::uint32_t Math::ColourCheckSum(const void* Data, std::uint32_t &MeanColour, std::size_t Width, std::size_t Height, uint32_t BitsPerPixel)
+std::uint32_t Math::ColourCheckSum(const void* Data, std::uint32_t &MeanColour, std::uint32_t &ClippedID, std::size_t Width, std::size_t Height)
 {
     std::uint32_t CheckSum = 0;
     int R = 0, G = 0, B = 0, K = 0;
-
     const std::uint8_t* BuffPos = static_cast<const std::uint8_t*>(Data);
 
     for (std::size_t I = Height < 12 ? 1 : 12; I < Height; ++I)
+    {
+        for (std::size_t J = 0; J < Width; ++J)
+        {
+            int b = *(BuffPos++);
+            int g = *(BuffPos++);
+            int r = *(BuffPos++);
+            CheckSum += *(BuffPos++);
+
+            if (r != 0 && g != 0 && b != 0)
+            {
+                R += r;
+                G += g;
+                B += b;
+                ++K;
+            }
+        }
+    }
+
+    MeanColour = (K != 0 ? RGB(R / K, G / K, B / K) : RGB(R, G, B));
+    BuffPos = static_cast<const std::uint8_t*>(Data);
+    R = G = B = K = 0;
+
+    for (std::size_t I = 0; I < Height; ++I)
     {
         for (std::size_t J = 0; J < Width; ++J, ++K)
         {
             R += *(BuffPos++);
             G += *(BuffPos++);
             B += *(BuffPos++);
-            CheckSum += (BitsPerPixel > 24 ? * (BuffPos++) : 0xFF);
+            ++BuffPos;
         }
-
-        if(BitsPerPixel == 24)
-            BuffPos += (-Width * 3) & 3;
     }
 
-    MeanColour = (K != 0 ? RGB(R / K, G / K, B / K) : RGB(R, G, B));
-
+    ClippedID = (K != 0 ? RGB(R / K, G / K, B / K) : RGB(R, G, B));
     return CheckSum;
 }
 

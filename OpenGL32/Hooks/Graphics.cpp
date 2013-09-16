@@ -31,12 +31,11 @@ void FlipImageBytes(void* In, void* &Out, int width, int height, uint32_t Bpp)
    }
 }
 
-void EnableDrawing(bool &GLTexture2D, bool &GLRectangleTexture, bool &PointSmooth, float &PointSize)
+void EnableDrawing(bool &GLTexture2D, bool &GLRectangleTexture, bool &PointSmooth)
 {
     GLTexture2D = glIsEnabled(GL_TEXTURE_2D);
     GLRectangleTexture = glIsEnabled(GL_TEXTURE_RECTANGLE);
     PointSmooth = glIsEnabled(GL_POINT_SMOOTH);
-    glGetFloatv(GL_POINT_SIZE, &PointSize);
 
     glDisable(GL_TEXTURE_RECTANGLE);
     glDisable(GL_TEXTURE_2D);
@@ -47,7 +46,7 @@ void EnableDrawing(bool &GLTexture2D, bool &GLRectangleTexture, bool &PointSmoot
     glLoadIdentity();
 }
 
-void DisableDrawing(bool GLTexture2D, bool GLRectangleTexture, bool PointSmooth, float PointSize)
+void DisableDrawing(bool GLTexture2D, bool GLRectangleTexture, bool PointSmooth)
 {
     glPopMatrix();
     if (GLTexture2D) glEnable(GL_TEXTURE_2D);

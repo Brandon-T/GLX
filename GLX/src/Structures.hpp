@@ -57,6 +57,7 @@ typedef struct
 {
     std::uint32_t ID;
     std::uint32_t ColourID;
+    std::uint32_t ClippedID;
     int X, Y;
     int X1, Y1, X2, Y2;
 } Texture;

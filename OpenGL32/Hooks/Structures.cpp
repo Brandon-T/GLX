@@ -19,7 +19,7 @@
 
 std::vector<Texture> Texture::Textures;
 std::uint32_t Texture::ActiveTextures[3];
-std::multimap<uint32_t, std::pair<uint32_t, uint32_t>> Texture::IDMap;
+std::multimap<std::uint32_t, std::tuple<std::uint32_t, std::uint32_t, std::uint32_t>> Texture::IDMap;
 std::vector<Font> Font::Fonts;
 std::vector<Font> Font::RenderedFonts;
 std::vector<Model> Model::Models;
@@ -98,7 +98,19 @@ void ModelBuffer::LogBufferData(std::uint32_t target, std::ptrdiff_t size, const
         CurrentBuffer.Size = this->Size = size;
         CurrentBuffer.Usage = this->Usage = usage;
         CurrentBuffer.Checksum = this->Checksum = math.LazyCheckSum(reinterpret_cast<std::uint32_t*>(const_cast<void*>(data)), size);
-        ModelBuffer::Buffers.push_back(*this);
+
+        auto it = std::find_if(ModelBuffer::Buffers.begin(), ModelBuffer::Buffers.end(), [&](const ModelBuffer &MB) {
+            return MB.Checksum == this->Checksum;
+        });
+
+        if (it == ModelBuffer::Buffers.end())
+        {
+            ModelBuffer::Buffers.push_back(*this);
+        }
+        else
+        {
+            it->Checksum = this->Checksum;
+        }
     }
 }
 
@@ -108,7 +120,18 @@ void ModelBuffer::LogBufferSubData(std::uint32_t target, std::ptrdiff_t offset, 
     {
         CurrentBuffer.Size = this->Size = size;
         CurrentBuffer.Checksum = this->Checksum = math.LazyCheckSum(reinterpret_cast<std::uint32_t*>(const_cast<void*>(data)), size);
-        ModelBuffer::Buffers.push_back(*this);
+        auto it = std::find_if(ModelBuffer::Buffers.begin(), ModelBuffer::Buffers.end(), [&](const ModelBuffer &MB){
+            return MB.Checksum == this->Checksum;
+        });
+
+        if (it == ModelBuffer::Buffers.end())
+        {
+            ModelBuffer::Buffers.push_back(*this);
+        }
+        else
+        {
+            it->Checksum = this->Checksum;
+        }
     }
 }
 
@@ -185,12 +208,14 @@ void Texture::LogBindTexture(std::uint32_t target, std::uint32_t texture)
     {
         this->ID = texture;
         auto it = IDMap.find(texture);
-        this->Found = this->ID ? true : false;
+        this->Found = false;
 
         if (it != IDMap.end())
         {
-            this->BaseID = it->second.first;
-            this->ColourID = it->second.second;
+            this->Found = true;
+            this->BaseID = std::get<0>(it->second);
+            this->ColourID = std::get<1>(it->second);
+            this->ClippedID = std::get<2>(it->second);
         }
     }
 }
@@ -214,7 +239,7 @@ void Texture::LogVertices(int X, int Y)
         }
         this->X = (this->VX[0] + this->VX[2]) / 2;
         this->Y = (this->VY[0] + this->VY[2]) / 2;
-        Textures.emplace_back(*this);
+        Textures.push_back(*this);
         this->Count = 0;
     }
 }
@@ -232,19 +257,21 @@ void Texture::LogActiveTexture(std::uint32_t texture)
 
 void Texture::Log2DImageTexture(std::uint32_t Target, const void* Pixels, std::size_t Width, std::size_t Height)
 {
+    if (!Pixels) return;
     if (Target == GL_TEXTURE_RECTANGLE || Target == GL_TEXTURE_2D)
     {
         auto it = Texture::IDMap.find(this->ID);
-        this->BaseID = math.ColourCheckSum(Pixels, this->ColourID, Width, Height);
-
         if (it == Texture::IDMap.end())
         {
-            Texture::IDMap.insert(std::make_pair(this->ID, std::make_pair(this->BaseID, this->ColourID)));
+            this->BaseID = math.ColourCheckSum(Pixels, this->ColourID, this->ClippedID, Width, Height);
+            if (this->BaseID != 0)
+            {
+                Texture::IDMap.insert(std::make_pair(this->ID, std::make_tuple(this->BaseID, this->ColourID, this->ClippedID)));
+            }
         }
         else
         {
-            it->second.first = this->BaseID;
-            it->second.second = this->ColourID;
+            it->second = std::make_tuple(this->BaseID, this->ColourID, this->ClippedID);
         }
     }
 }
@@ -361,6 +388,7 @@ void Logger::Reset()
     matrices.Reset();
     map.Reset();
 
+    ModelBuffer::Buffers.shrink_to_fit();
     Texture::Textures.shrink_to_fit();
     Font::RenderedFonts.shrink_to_fit();
     Model::Models.shrink_to_fit();
@@ -428,6 +456,7 @@ Serialize& operator << (Serialize& Destination, const Texture &Source)
 {
     return Destination << Source.BaseID
     << Source.ColourID
+    << Source.ClippedID
     << Source.X
     << Source.Y
     << Source.VX[0]
@@ -485,6 +514,7 @@ DeSerialize& operator >> (DeSerialize& Source, Texture &Destination)
 {
     return Source >> Destination.ID
     >> Destination.ColourID
+    >> Destination.ClippedID
     >> Destination.X
     >> Destination.Y
     >> Destination.VX[0]

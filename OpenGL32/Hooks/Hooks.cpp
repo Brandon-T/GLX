@@ -63,27 +63,35 @@ void GLHook_glColor4ub(GLubyte red, GLubyte green, GLubyte blue, GLubyte alpha)
 
 void GLHook_glDeleteBuffersARB(GLsizei n,  const GLuint* buffers)
 {
-    /*for (int I = 0; I < n; ++I)
+    for (int I = 0; I < n; ++I)
     {
-        ModelBuffer::Buffers.erase(std::remove_if(ModelBuffer::Buffers.begin(), ModelBuffer::Buffers.end(), [&](const ModelBuffer &B) {return B.ID == buffers[I];}));
+        auto it = std::find_if(ModelBuffer::Buffers.begin(), ModelBuffer::Buffers.end(), [&](const ModelBuffer &B) {return B.ID == buffers[I];});
+        if (it != ModelBuffer::Buffers.end())
+        {
+            ModelBuffer::Buffers.erase(it);
+        }
     }
-    ModelBuffer::Buffers.shrink_to_fit();*/
+    ModelBuffer::Buffers.shrink_to_fit();
     ptr_glDeleteBuffers(n, buffers);
 }
 
 void GLHook_glDeleteLists(GLuint list, GLsizei range)
 {
-    /*for (std::size_t I = list; I < list + range; ++I)
+    for (std::size_t I = list; I < list + range; ++I)
     {
-        Font::Fonts.erase(std::remove_if(Font::Fonts.begin(), Font::Fonts.end(), [&](const Font &F) {return F.ID == I;}));
+        auto it = std::find_if(Font::Fonts.begin(), Font::Fonts.end(), [&](const Font &F) {return F.ID == I;});
+        if (it != Font::Fonts.end())
+        {
+            Font::Fonts.erase(it);
+        }
     }
-    Font::Fonts.shrink_to_fit();*/
+    Font::Fonts.shrink_to_fit();
 	ptr_glDeleteLists(list, range);
 }
 
 void GLHook_glDeleteTextures(GLsizei n, const GLuint *textures)
 {
-    /*for (int I = 0; I < n; ++I)
+    for (int I = 0; I < n; ++I)
     {
         auto it = Texture::IDMap.find(textures[I]);
         if (it != Texture::IDMap.end())
@@ -97,7 +105,7 @@ void GLHook_glDeleteTextures(GLsizei n, const GLuint *textures)
             Texture::Textures.erase(jt);
         }
     }
-    Texture::Textures.shrink_to_fit();*/
+    Texture::Textures.shrink_to_fit();
 	ptr_glDeleteTextures(n, textures);
 }
 
@@ -246,7 +254,6 @@ BOOL GLHook_wglSwapBuffers(HDC hdc)
 {
     ProcessRequests();
     GLint ViewPort[4] = {0};
-    float PointSize = 0;
     bool Drawing[3] = {0};
     static std::vector<std::uint8_t> Buffer;
     static Render R(hdc, 8);
@@ -272,7 +279,7 @@ BOOL GLHook_wglSwapBuffers(HDC hdc)
             if (!IsIconic(WindowFromDC(hdc)))
             {
                 int X = 0, Y = 0;
-                EnableDrawing(Drawing[0], Drawing[1], Drawing[2], PointSize);
+                EnableDrawing(Drawing[0], Drawing[1], Drawing[2]);
                 if (SmartDebugEnabled)
                 {
                     BltSmartBuffer();
@@ -282,14 +289,14 @@ BOOL GLHook_wglSwapBuffers(HDC hdc)
                 SmartGlobal->getMousePos(X, Y);
                 if (X != -1 && Y != -1)
                 {
-                    glPointSize(4);
+                    glPointSize(3);
                     glRasterPos2i(X, Y);
                     glColor3ub(0xFF, 0, 0);
                     glBegin(GL_POINTS);
                         glVertex3f(X, Y, 0);
                     glEnd();
                 }
-                DisableDrawing(Drawing[0], Drawing[1], Drawing[2], PointSize);
+                DisableDrawing(Drawing[0], Drawing[1], Drawing[2]);
             }
         }
     }
@@ -304,11 +311,11 @@ BOOL GLHook_wglSwapBuffers(HDC hdc)
         FlipImageBytes(Buffer.data(), ImgPtr, ViewPort[2], ViewPort[3]);
         if (!IsIconic(WindowFromDC(hdc)))
         {
-            EnableDrawing(Drawing[0], Drawing[1], Drawing[2], PointSize);
+            EnableDrawing(Drawing[0], Drawing[1], Drawing[2]);
             void* DbgPtr = reinterpret_cast<std::uint8_t*>(SharedImageData->GetDataPointer()) + SharedImageSize;
             BltMappedBuffer(DbgPtr, ViewPort[2], ViewPort[3]);
             Debugger.Draw();
-            DisableDrawing(Drawing[0], Drawing[1], Drawing[2], PointSize);
+            DisableDrawing(Drawing[0], Drawing[1], Drawing[2]);
         }
     }
 

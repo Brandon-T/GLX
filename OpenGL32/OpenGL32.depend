@@ -482,7 +482,7 @@
 1376007528 c:\users\brandon\documents\github\glx\opengl32\hooks\system.hpp
 	<string>
 
-1376007450 c:\users\brandon\documents\github\glx\opengl32\hooks\math.hpp
+1379133432 c:\users\brandon\documents\github\glx\opengl32\hooks\math.hpp
 	<GL/gl.h>
 	<GL/glu.h>
 	<cstdint>
@@ -492,14 +492,14 @@
 	<algorithm>
 	"MathEx.hpp"
 
-1376007459 c:\users\brandon\documents\github\glx\opengl32\hooks\mathex.hpp
+1379133355 c:\users\brandon\documents\github\glx\opengl32\hooks\mathex.hpp
 	<array>
 	<cstring>
 
-1376070827 source:c:\users\brandon\documents\github\glx\opengl32\hooks\communication.cpp
+1379133610 source:c:\users\brandon\documents\github\glx\opengl32\hooks\communication.cpp
 	"Communication.hpp"
 
-1376070009 c:\users\brandon\documents\github\glx\opengl32\hooks\communication.hpp
+1378529045 c:\users\brandon\documents\github\glx\opengl32\hooks\communication.hpp
 	<iostream>
 	<GL/gl.h>
 	<GL/glext.h>
@@ -508,7 +508,7 @@
 	"SharedMemory.hpp"
 	"Debugger.hpp"
 
-1376007520 c:\users\brandon\documents\github\glx\opengl32\hooks\structures.hpp
+1379133087 c:\users\brandon\documents\github\glx\opengl32\hooks\structures.hpp
 	<cmath>
 	<cstdint>
 	<vector>
@@ -516,9 +516,12 @@
 	<GL/glext.h>
 	<map>
 	<cstring>
+	<fstream>
+	<tuple>
 	"Math.hpp"
 	"MathEx.hpp"
 	"Serialization.hpp"
+	"Graphics.hpp"
 
 1376007479 c:\users\brandon\documents\github\glx\opengl32\hooks\serialization.hpp
 	<vector>
@@ -545,12 +548,13 @@
 	"Render.hpp"
 	"Structures.hpp"
 
-1376007439 c:\users\brandon\documents\github\glx\opengl32\hooks\graphics.hpp
+1379133691 c:\users\brandon\documents\github\glx\opengl32\hooks\graphics.hpp
 	<GL/gl.h>
 	<GL/glext.h>
 	<iostream>
 	<cstring>
 	<vector>
+	"../Imaging/LodePNG.h"
 
 1376007559 source:c:\users\brandon\documents\github\glx\opengl32\hooks\debugger.cpp
 	"Debugger.hpp"
@@ -558,10 +562,10 @@
 1376007571 source:c:\users\brandon\documents\github\glx\opengl32\hooks\exports.cpp
 	"Exports.hpp"
 
-1376007581 source:c:\users\brandon\documents\github\glx\opengl32\hooks\graphics.cpp
+1379133708 source:c:\users\brandon\documents\github\glx\opengl32\hooks\graphics.cpp
 	"Graphics.hpp"
 
-1376007597 source:c:\users\brandon\documents\github\glx\opengl32\hooks\math.cpp
+1379196788 source:c:\users\brandon\documents\github\glx\opengl32\hooks\math.cpp
 	"Math.hpp"
 
 1376007606 source:c:\users\brandon\documents\github\glx\opengl32\hooks\platform.cpp
@@ -582,7 +586,7 @@
 1376007512 c:\users\brandon\documents\github\glx\opengl32\hooks\smartplugin.hpp
 	"Graphics.hpp"
 
-1376031762 source:c:\users\brandon\documents\github\glx\opengl32\hooks\structures.cpp
+1379274276 source:c:\users\brandon\documents\github\glx\opengl32\hooks\structures.cpp
 	"Structures.hpp"
 
 1376007654 source:c:\users\brandon\documents\github\glx\opengl32\main.cpp
@@ -759,4 +763,32 @@
 
 1372570870 source:c:\users\brandon\desktop\opengl32\imaging\platforms.cpp
 	"Platforms.hpp"
+
+1372570870 c:\users\brandon\documents\github\glx\opengl32\imaging\lodepng.h
+	<string.h>
+	<vector>
+	<string>
+	"lodepng.h"
+	<iostream>
+	"lodepng.h"
+
+1379274206 source:c:\users\brandon\documents\github\glx\opengl32\hooks\hooks.cpp
+	"Hooks.hpp"
+
+1376007445 c:\users\brandon\documents\github\glx\opengl32\hooks\hooks.hpp
+	<GL/gl.h>
+	<GL/glext.h>
+	<memory>
+	"Exports.hpp"
+	"System.hpp"
+	"Math.hpp"
+	"Structures.hpp"
+	"SmartPlugin.hpp"
+	"Communication.hpp"
+
+1372570870 source:c:\users\brandon\documents\github\glx\opengl32\imaging\lodepng.cpp
+	"LodePNG.h"
+	<stdio.h>
+	<stdlib.h>
+	<fstream>
 

@@ -64,7 +64,7 @@ class Math
 
         bool ScreenToWorld(float X, float Y, Vector3D<float> &World, int* ViewPort, double* ModelViewMatrix, double* ProjectionMatrix);
 
-        std::uint32_t ColourCheckSum(const void* Data, std::uint32_t &MeanColour, size_t Width, size_t Height, uint32_t BitsPerPixel = 32);
+        std::uint32_t ColourCheckSum(const void* Data, std::uint32_t &MeanColour, std::uint32_t &ClippedID, size_t Width, size_t Height);
 
         std::uint32_t LazyCheckSum(std::uint32_t* BufferData, size_t Size);
 

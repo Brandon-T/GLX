@@ -303,13 +303,13 @@ class Array
         Array(T** Data, int Width, int Height);
 
         inline int size() {return Width * Height;}
-        inline const int size() const {return Width * Height;}
+        inline int size() const {return Width * Height;}
 
         inline int width() {return Width;}
-        inline const int width() const {return Width;}
+        inline int width() const {return Width;}
 
         inline int height() {return Height;}
-        inline const int height() const {return Height;}
+        inline int height() const {return Height;}
 
         inline T* operator [](int Index) {return const_cast<T*>(Data.data()) + Height * Index;}
         inline const T* operator [](int Index) const {return Data.data() + Height * Index;}

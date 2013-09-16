@@ -30,7 +30,7 @@ std::string RequestEventName = "GLXRequest_";
 void GetDesktopResolution(int &width, int &height)
 {
 #if defined _WIN32 || defined _WIN64
-    RECT desktop = {0};
+    RECT desktop = {0, 0, 0, 0};
     const HWND hDesktop = GetDesktopWindow();
     GetWindowRect(hDesktop, &desktop);
     width = desktop.right;
