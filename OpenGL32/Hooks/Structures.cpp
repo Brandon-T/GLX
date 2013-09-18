@@ -98,19 +98,7 @@ void ModelBuffer::LogBufferData(std::uint32_t target, std::ptrdiff_t size, const
         CurrentBuffer.Size = this->Size = size;
         CurrentBuffer.Usage = this->Usage = usage;
         CurrentBuffer.Checksum = this->Checksum = math.LazyCheckSum(reinterpret_cast<std::uint32_t*>(const_cast<void*>(data)), size);
-
-        auto it = std::find_if(ModelBuffer::Buffers.begin(), ModelBuffer::Buffers.end(), [&](const ModelBuffer &MB) {
-            return MB.Checksum == this->Checksum;
-        });
-
-        if (it == ModelBuffer::Buffers.end())
-        {
-            ModelBuffer::Buffers.push_back(*this);
-        }
-        else
-        {
-            it->Checksum = this->Checksum;
-        }
+        ModelBuffer::Buffers.push_back(*this);
     }
 }
 
@@ -120,18 +108,7 @@ void ModelBuffer::LogBufferSubData(std::uint32_t target, std::ptrdiff_t offset, 
     {
         CurrentBuffer.Size = this->Size = size;
         CurrentBuffer.Checksum = this->Checksum = math.LazyCheckSum(reinterpret_cast<std::uint32_t*>(const_cast<void*>(data)), size);
-        auto it = std::find_if(ModelBuffer::Buffers.begin(), ModelBuffer::Buffers.end(), [&](const ModelBuffer &MB){
-            return MB.Checksum == this->Checksum;
-        });
-
-        if (it == ModelBuffer::Buffers.end())
-        {
-            ModelBuffer::Buffers.push_back(*this);
-        }
-        else
-        {
-            it->Checksum = this->Checksum;
-        }
+        ModelBuffer::Buffers.push_back(*this);
     }
 }
 
