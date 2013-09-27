@@ -201,3 +201,55 @@
 1374692276 source:c:\users\brandon\documents\github\glx\glx\structures.cpp
 	"Structures.hpp"
 
+1380315192 source:c:\users\brandon\desktop\glx-e5ce26d8fa74200d45c67c92beaa336c539a97d9\glx\src\main.cpp
+	"Exports.hpp"
+
+1380315192 c:\users\brandon\desktop\glx-e5ce26d8fa74200d45c67c92beaa336c539a97d9\glx\src\exports.hpp
+	<cstring>
+	<vector>
+	<memory>
+	"Platform.hpp"
+	"Structures.hpp"
+	"SharedMemory.hpp"
+
+1380315192 c:\users\brandon\desktop\glx-e5ce26d8fa74200d45c67c92beaa336c539a97d9\glx\src\platform.hpp
+	<windows.h>
+	<dlfcn.h>
+	<string>
+	<cstdint>
+	<stdexcept>
+
+1380315192 c:\users\brandon\desktop\glx-e5ce26d8fa74200d45c67c92beaa336c539a97d9\glx\src\structures.hpp
+	<array>
+	"Serialization.hpp"
+
+1380315192 c:\users\brandon\desktop\glx-e5ce26d8fa74200d45c67c92beaa336c539a97d9\glx\src\serialization.hpp
+	<vector>
+	<sstream>
+	<iostream>
+	<list>
+	<array>
+
+1380315192 c:\users\brandon\desktop\glx-e5ce26d8fa74200d45c67c92beaa336c539a97d9\glx\src\sharedmemory.hpp
+	<windows.h>
+	<sys/types.h>
+	<sys/mman.h>
+	<dlfcn.h>
+	<fcntl.h>
+	<unistd.h>
+	<tchar.h>
+	<iostream>
+	<map>
+
+1380315192 source:c:\users\brandon\desktop\glx-e5ce26d8fa74200d45c67c92beaa336c539a97d9\glx\src\platform.cpp
+	"Platform.hpp"
+
+1380315192 source:c:\users\brandon\desktop\glx-e5ce26d8fa74200d45c67c92beaa336c539a97d9\glx\src\serialization.cpp
+	"Serialization.hpp"
+
+1380315192 source:c:\users\brandon\desktop\glx-e5ce26d8fa74200d45c67c92beaa336c539a97d9\glx\src\sharedmemory.cpp
+	"SharedMemory.hpp"
+
+1380315192 source:c:\users\brandon\desktop\glx-e5ce26d8fa74200d45c67c92beaa336c539a97d9\glx\src\structures.cpp
+	"Structures.hpp"
+
