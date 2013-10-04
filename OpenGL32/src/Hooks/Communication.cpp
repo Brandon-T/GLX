@@ -19,6 +19,7 @@
 
 DebugGraphics Debugger;
 bool Initialized = false;
+bool FontsEnabled = true;
 bool ColourBufferEnabled = true;
 std::unique_ptr<SharedMemory> SharedImageData;
 std::unique_ptr<SharedMemory> SharedHookData;
@@ -155,11 +156,16 @@ void ProcessRequests()
                 case GLX_Debug:
                 {
                     Debugger.SetMode(ReadPointer<std::uint32_t>(Data));
-                    Debugger.SetTexture(ReadPointer<std::uint32_t>(Data));
+                    std::uint32_t ID = ReadPointer<std::uint32_t>(Data);
+                    std::uint32_t ColourID = ReadPointer<std::uint32_t>(Data);
+                    std::uint32_t FullColourID = ReadPointer<std::uint32_t>(Data);
+                    int Tolerance = ReadPointer<int>(Data);
                     int X1 = ReadPointer<int>(Data);
                     int Y1 = ReadPointer<int>(Data);
                     int X2 = ReadPointer<int>(Data);
                     int Y2 = ReadPointer<int>(Data);
+
+                    Debugger.SetTexture(ID, ColourID, FullColourID, Tolerance);
                     Debugger.SetArea(X1, Y1, X2, Y2);
                     SharedHookData->SetEventSignal(RequestEventName, false);
                     SharedHookData->SetEventSignal(ReplyEventName, true);
@@ -176,9 +182,18 @@ void ProcessRequests()
 
                 case GLX_SaveTexture:
                 {
-                    std::uint32_t TextureID = ReadPointer<std::uint32_t>(Data);
-                    std::uint32_t TextureType = ReadPointer<std::uint32_t>(Data);
-                    InfoLogger.Save(TextureID, TextureType);
+                    for (auto it = Texture::Textures.begin(); it != Texture::Textures.end(); ++it)
+                    {
+                        InfoLogger.Save(it->ID, it->Target);
+                    }
+                    SharedHookData->SetEventSignal(RequestEventName, false);
+                    SharedHookData->SetEventSignal(ReplyEventName, true);
+                }
+                break;
+
+                case GLX_FontsEnable:
+                {
+                    FontsEnabled = ReadPointer<int>(Data);
                     SharedHookData->SetEventSignal(RequestEventName, false);
                     SharedHookData->SetEventSignal(ReplyEventName, true);
                 }

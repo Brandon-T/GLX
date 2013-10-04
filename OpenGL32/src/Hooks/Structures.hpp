@@ -32,13 +32,6 @@
 #include "Serialization.hpp"
 #include "Graphics.hpp"
 
-struct Deleter
-{
-    void LogDeleteBuffers();
-    void LogDeleteTextures();
-    void LogDeleteLists();
-};
-
 struct Matrices
 {
     private:

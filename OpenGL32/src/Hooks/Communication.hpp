@@ -40,6 +40,7 @@
 #define GLX_Debug           8
 #define GLX_ColourBuffer    9
 #define GLX_SaveTexture     10
+#define GLX_FontsEnable      11
 
 
 extern bool Initialized;
@@ -65,6 +66,7 @@ void WritePointer(char*& Pointer, const T& Value)
     Pointer += sizeof(T);
 }
 
+extern bool FontsEnabled;
 extern bool ColourBufferEnabled;
 extern void GetDesktopResolution(int &width, int &height);
 extern bool CreateSharedMemory(int ProcessID);

@@ -31,6 +31,7 @@
 #define GLX_Debug           8
 #define GLX_ColourBuffer    9
 #define GLX_SaveTexture     10
+#define GLX_FontsEnable     11
 
 
 typedef struct
@@ -57,7 +58,7 @@ typedef struct
 {
     std::uint32_t ID;
     std::uint32_t ColourID;
-    std::uint32_t ClippedID;
+    std::uint32_t FullColourID;
     int X, Y;
     int X1, Y1, X2, Y2;
 } Texture;

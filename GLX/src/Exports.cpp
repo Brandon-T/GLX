@@ -37,32 +37,33 @@ char* Exports[] = {
     (char*)"GLXMatrices", (char*)"Function GLXMatrices: Pointer;",
     (char*)"GLXMap", (char*)"Function GLXMap(var Width, Height: Integer; var X, Y: array[0..3] of Single): Pointer;",
     (char*)"GLXMapCoords", (char*)"Procedure GLXMapCoords(var X, Y: array[0..3] of single);",
-    (char*)"GLXDebug", (char*)"Procedure GLXDebug(Mode, HudID: Cardinal; X1, Y1, X2, Y2: Integer);",
+    (char*)"GLXDebug", (char*)"Procedure GLXDebug(Mode, TextureID, ColourID, FullColourID: Cardinal; Tolerance, X1, Y1, X2, Y2: Integer);",
     (char*)"GLXSetColourCapture", (char*)"Procedure GLXSetColourCapture(Enable: Boolean);",
-    (char*)"GLXSaveTexture", (char*)"Procedure GLXSaveTexture(TextureID: Integer; Rectangle: Boolean);"
+    (char*)"GLXSetFontCapture", (char*)"Procedure GLXSetFontCapture(Enable: Boolean);",
+    (char*)"GLXSaveTexture", (char*)"Procedure GLXSaveTextures;"
 };
 
-extern "C" bool __declspec(dllexport) GLXSetup(int ProcessID)
+bool GLXSetup(int ProcessID)
 {
     return (CreateSharedMemory(ProcessID) || OpenSharedMemory(ProcessID));
 }
 
-extern "C" bool __declspec(dllexport) GLXMapHooks(int ProcessID)
+bool GLXMapHooks(int ProcessID)
 {
     return MapHooks(ProcessID);
 }
 
-extern "C" void* __declspec(dllexport) GLXImagePointer()
+void* GLXImagePointer()
 {
     return SharedImageData ? SharedImageData->GetDataPointer() : nullptr;
 }
 
-extern "C" void* __declspec(dllexport) GLXDebugPointer()
+void* GLXDebugPointer()
 {
     return SharedImageData ? reinterpret_cast<std::uint8_t*>(SharedImageData->GetDataPointer()) + SharedImageSize : nullptr;
 }
 
-extern "C" void __declspec(dllexport) GLXViewPort(int &X1, int &Y1, int &X2, int &Y2)
+void GLXViewPort(int &X1, int &Y1, int &X2, int &Y2)
 {
     X1 = X2 = Y1 = Y2 = 0;
     char* Data = static_cast<char*>(SharedHookData->GetDataPointer());
@@ -78,7 +79,7 @@ extern "C" void __declspec(dllexport) GLXViewPort(int &X1, int &Y1, int &X2, int
     SharedHookData->SetEventSignal(ReplyEventName, false);
 }
 
-extern "C" Texture* __declspec(dllexport) GLXTextures(std::uint32_t &Size)
+Texture* GLXTextures(std::uint32_t &Size)
 {
     Size = 0;
     LoT.clear();
@@ -97,7 +98,7 @@ extern "C" Texture* __declspec(dllexport) GLXTextures(std::uint32_t &Size)
     return nullptr;
 }
 
-extern "C" Model* __declspec(dllexport) GLXModels(std::uint32_t &Size)
+Model* GLXModels(std::uint32_t &Size)
 {
     Size = 0;
     LoM.clear();
@@ -116,7 +117,7 @@ extern "C" Model* __declspec(dllexport) GLXModels(std::uint32_t &Size)
     return nullptr;
 }
 
-extern "C" Font* __declspec(dllexport) GLXFonts(std::uint32_t &Size)
+Font* GLXFonts(std::uint32_t &Size)
 {
     Size = 0;
     LoF.clear();
@@ -135,7 +136,7 @@ extern "C" Font* __declspec(dllexport) GLXFonts(std::uint32_t &Size)
     return nullptr;
 }
 
-extern "C" Matrices* GLXMatrices()
+Matrices* GLXMatrices()
 {
     std::memset(&matrices.ModelView[0], 0, matrices.ModelView.size() * sizeof(float));
     char* Data = static_cast<char*>(SharedHookData->GetDataPointer());
@@ -152,7 +153,7 @@ extern "C" Matrices* GLXMatrices()
     return nullptr;
 }
 
-extern "C" std::uint8_t* GLXMap(int &Width, int &Height, float X[4], float Y[4])
+std::uint8_t* GLXMap(int &Width, int &Height, float X[4], float Y[4])
 {
     map.Pixels.clear();
     std::memset(&map, 0, (sizeof(float) * 8) + (sizeof(int) * 3));
@@ -176,7 +177,7 @@ extern "C" std::uint8_t* GLXMap(int &Width, int &Height, float X[4], float Y[4])
     return nullptr;
 }
 
-extern "C" void GLXMapCoords(float X[4], float Y[4])
+void GLXMapCoords(float X[4], float Y[4])
 {
     std::memset(X, 0, sizeof(float) * 4);
     std::memset(Y, 0, sizeof(float) * 4);
@@ -194,16 +195,33 @@ extern "C" void GLXMapCoords(float X[4], float Y[4])
     SharedHookData->SetEventSignal(ReplyEventName, false);
 }
 
-extern "C" void GLXDebug(std::uint32_t Mode, std::uint32_t HudID, int X1, int Y1, int X2, int Y2)
+void GLXDebug(std::uint32_t Mode, std::uint32_t TextureID, std::uint32_t ColourID, std::uint32_t FullColourID, int Tolerance, int X1, int Y1, int X2, int Y2)
 {
     char* Data = static_cast<char*>(SharedHookData->GetDataPointer());
     WritePointer(Data, GLX_Debug);
     WritePointer(Data, Mode);
-    WritePointer(Data, HudID);
+    WritePointer(Data, TextureID);
+    WritePointer(Data, ColourID);
+    WritePointer(Data, FullColourID);
+    WritePointer(Data, Tolerance);
     WritePointer(Data, X1);
     WritePointer(Data, Y1);
     WritePointer(Data, X2);
     WritePointer(Data, Y2);
+    SharedHookData->SetEventSignal(RequestEventName, true);
+    SharedHookData->OpenSingleEvent(ReplyEventName, true, true);
+    SharedHookData->SetEventSignal(ReplyEventName, false);
+}
+
+void GLXSetFontCapture(bool Enabled)
+{
+    char* Data = static_cast<char*>(SharedHookData->GetDataPointer());
+    WritePointer(Data, GLX_FontsEnable);
+    WritePointer(Data, Enabled ? 1 : 0);
+    SharedHookData->SetEventSignal(RequestEventName, true);
+    SharedHookData->OpenSingleEvent(ReplyEventName, true, true);
+    SharedHookData->SetEventSignal(ReplyEventName, false);
+
     SharedHookData->SetEventSignal(RequestEventName, true);
     SharedHookData->OpenSingleEvent(ReplyEventName, true, true);
     SharedHookData->SetEventSignal(ReplyEventName, false);
@@ -217,14 +235,16 @@ void GLXSetColourCapture(bool Enabled)
     SharedHookData->SetEventSignal(RequestEventName, true);
     SharedHookData->OpenSingleEvent(ReplyEventName, true, true);
     SharedHookData->SetEventSignal(ReplyEventName, false);
+
+    SharedHookData->SetEventSignal(RequestEventName, true);
+    SharedHookData->OpenSingleEvent(ReplyEventName, true, true);
+    SharedHookData->SetEventSignal(ReplyEventName, false);
 }
 
-void GLXSaveTexture(std::uint32_t TextureID, bool glRectangleTexture)
+void GLXSaveTextures()
 {
     char* Data = static_cast<char*>(SharedHookData->GetDataPointer());
     WritePointer(Data, GLX_SaveTexture);
-    WritePointer(Data, TextureID);
-    WritePointer(Data, glRectangleTexture ? 0x84F5 : 0x0DE1);
     SharedHookData->SetEventSignal(RequestEventName, true);
     SharedHookData->OpenSingleEvent(ReplyEventName, true, true);
     SharedHookData->SetEventSignal(ReplyEventName, false);

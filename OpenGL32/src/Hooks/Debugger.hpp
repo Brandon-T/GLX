@@ -32,13 +32,13 @@ class DebugGraphics
 
         int Mode = 0;
         Box Filters[4];
-        std::uint32_t HudID = 0;
+        std::uint32_t HudID = 0, ColourID = 0, FullColourID = 0, Tolerance = 0;
 
     public:
         void SetMode(std::uint32_t Mode);
         void SetRenderer(Render* Renderer);
         void SetArea(int X1, int Y1, int X2, int Y2);
-        void SetTexture(std::uint32_t ID);
+        void SetTexture(std::uint32_t ID, std::uint32_t CID, std::uint32_t FID, int Tol);
         void Draw();
 };
 

@@ -51,7 +51,10 @@ void GLHook_glBufferSubDataARB(GLenum target, GLintptrARB offset, GLsizeiptrARB 
 
 void GLHook_glCallList(GLuint list)
 {
-    InfoLogger.font.LogCallList(list);
+    if (FontsEnabled)
+    {
+        InfoLogger.font.LogCallList(list);
+    }
 	ptr_glCallList(list);
 }
 
@@ -308,7 +311,11 @@ BOOL GLHook_wglSwapBuffers(HDC hdc)
         }
 
         void* ImgPtr = SharedImageData->GetDataPointer();
-        FlipImageBytes(Buffer.data(), ImgPtr, ViewPort[2], ViewPort[3]);
+        if (ColourBufferEnabled)
+        {
+            FlipImageBytes(Buffer.data(), ImgPtr, ViewPort[2], ViewPort[3]);
+        }
+
         if (!IsIconic(WindowFromDC(hdc)))
         {
             EnableDrawing(Drawing[0], Drawing[1], Drawing[2]);

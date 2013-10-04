@@ -25,6 +25,15 @@
 #include <vector>
 #include "../Imaging/LodePNG.h"
 
+typedef union RGBA
+{
+    std::uint32_t Colour;
+    struct
+    {
+        std::uint8_t R, G, B, A;
+    };
+} *PRGB;
+
 void FlipImageBytes(void* In, void* &Out, int width, int height, uint32_t Bpp = 32);
 void EnableDrawing(bool &GLTexture2D, bool &GLRectangleTexture, bool &PointSmooth);
 void DisableDrawing(bool GLTexture2D, bool GLRectangleTexture, bool PointSmooth);

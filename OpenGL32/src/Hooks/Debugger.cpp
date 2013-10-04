@@ -32,9 +32,13 @@ void DebugGraphics::SetArea(int X1, int Y1, int X2, int Y2)
     this->Filters[this->Mode > 0 ? this->Mode - 1 : 0] = {X1, Y1, X2, Y2};
 }
 
-void DebugGraphics::SetTexture(std::uint32_t ID)
+void DebugGraphics::SetTexture(std::uint32_t ID, std::uint32_t CID, std::uint32_t FID, int Tol)
 {
     this->HudID = ID;
+    this->ColourID = CID;
+    this->FullColourID = FID;
+    this->Tolerance = Tol;
+
 }
 
 void DebugGraphics::Draw()
@@ -76,7 +80,19 @@ void DebugGraphics::Draw()
     {
         int HudX = 4, HudY = 75;
         int TextX = 10, TextY = 90, TextLn = 10;
-        auto it = std::find_if(Texture::Textures.begin(), Texture::Textures.end(), [&](const Texture &T) {return T.BaseID == this->HudID;});
+
+        auto SimilarColours = [&](std::uint32_t ColourOne, std::uint32_t ColourTwo, int Tol) {
+            static RGBA FirstCol = {0};
+            static RGBA SecondCol = {0};
+            FirstCol.Colour = ColourOne;
+            SecondCol.Colour = ColourTwo;
+
+            return ((FirstCol.R - SecondCol.R) * (FirstCol.R - SecondCol.R) + (FirstCol.G - SecondCol.G) * (FirstCol.G - SecondCol.G) + (FirstCol.B - SecondCol.B) * (FirstCol.B - SecondCol.B)) <= (Tol * Tol);
+        };
+
+        auto it = std::find_if(Texture::Textures.begin(), Texture::Textures.end(), [&](const Texture &T) {
+            return T.BaseID == this->HudID && (this->ColourID != 0 ? SimilarColours(T.ColourID, this->ColourID, this->Tolerance) : true) && (this->FullColourID != 0 ? SimilarColours(T.FullColourID, this->FullColourID, this->Tolerance) : true);
+        });
 
         if (it != Texture::Textures.end())
         {
@@ -93,7 +109,7 @@ void DebugGraphics::Draw()
 
             glColor4f(0.0f, 0.0f, 0.0f, 1.0f);
             Renderer->DrawRect(HudX, HudY, MaxWidth, MaxHeight, false);
-            Renderer->Print(70, TextY, 1.0f, 1.0f, 1.0f, "GLX v3.0");
+            Renderer->Print(70, TextY, 1.0f, 1.0f, 1.0f, "GLX v3.5");
 
             glColor4f(0.0f, 0.0f, 0.0f, 1.0f);
             TextY += (TextLn - 2);

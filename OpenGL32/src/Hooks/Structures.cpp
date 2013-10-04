@@ -216,7 +216,8 @@ void Texture::LogVertices(int X, int Y)
         }
         this->X = (this->VX[0] + this->VX[2]) / 2;
         this->Y = (this->VY[0] + this->VY[2]) / 2;
-        Textures.push_back(*this);
+        if (this->BaseID != 0)
+            Textures.push_back(*this);
         this->Count = 0;
     }
 }

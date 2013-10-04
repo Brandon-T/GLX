@@ -25,7 +25,7 @@
 #include "Structures.hpp"
 #include "SharedMemory.hpp"
 
-#define ExportCount         14
+#define ExportCount         15
 #define SharedImageSize     8294400     //Highest Resolution Support: 1920 x 1080 x sizeof(RGBA)
 #define TotalImageSize      (SharedImageSize * 2)  //Image + DebugImage
 #define SharedHookSize      5000000
@@ -53,9 +53,10 @@ extern "C" Font* __declspec(dllexport) GLXFonts(std::uint32_t &Size);
 extern "C" Matrices* __declspec(dllexport) GLXMatrices();
 extern "C" std::uint8_t* __declspec(dllexport) GLXMap(int &Width, int &Height, float X[4], float Y[4]);
 extern "C" void __declspec(dllexport) GLXMapCoords(float X[4], float Y[4]);
-extern "C" void __declspec(dllexport) GLXDebug(std::uint32_t Mode, std::uint32_t HudID, int X1, int Y1, int X2, int Y2);
+extern "C" void __declspec(dllexport) GLXDebug(std::uint32_t Mode, std::uint32_t TextureID, std::uint32_t ColourID, std::uint32_t FullColourID, int Tolerance, int X1, int Y1, int X2, int Y2);
+extern "C" void __declspec(dllexport) GLXSetFontCapture(bool Enabled);
 extern "C" void __declspec(dllexport) GLXSetColourCapture(bool Enabled);
-extern "C" void __declspec(dllexport) GLXSaveTexture(std::uint32_t TextureID, bool glRectangleTexture);
+extern "C" void __declspec(dllexport) GLXSaveTextures();
 
 extern void GetDesktopResolution(int &width, int &height);
 extern bool CreateSharedMemory(int ProcessID);
