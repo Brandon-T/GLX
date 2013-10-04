@@ -119,7 +119,7 @@ struct Texture
         int X, Y, Count;
         int VX[4], VY[4];
         int Width, Height;
-        std::uint32_t Target, ID, BaseID, ColourID, ClippedID;
+        std::uint32_t Target, ID, BaseID, ColourID, FullColourID;
         static std::vector<Texture> Textures;
         static std::multimap<std::uint32_t, std::tuple<std::uint32_t, std::uint32_t, std::uint32_t>> IDMap;
 

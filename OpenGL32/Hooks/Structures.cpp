@@ -192,7 +192,7 @@ void Texture::LogBindTexture(std::uint32_t target, std::uint32_t texture)
             this->Found = true;
             this->BaseID = std::get<0>(it->second);
             this->ColourID = std::get<1>(it->second);
-            this->ClippedID = std::get<2>(it->second);
+            this->FullColourID = std::get<2>(it->second);
         }
     }
 }
@@ -240,15 +240,15 @@ void Texture::Log2DImageTexture(std::uint32_t Target, const void* Pixels, std::s
         auto it = Texture::IDMap.find(this->ID);
         if (it == Texture::IDMap.end())
         {
-            this->BaseID = math.ColourCheckSum(Pixels, this->ColourID, this->ClippedID, Width, Height);
+            this->BaseID = math.ColourCheckSum(Pixels, this->ColourID, this->FullColourID, Width, Height);
             if (this->BaseID != 0)
             {
-                Texture::IDMap.insert(std::make_pair(this->ID, std::make_tuple(this->BaseID, this->ColourID, this->ClippedID)));
+                Texture::IDMap.insert(std::make_pair(this->ID, std::make_tuple(this->BaseID, this->ColourID, this->FullColourID)));
             }
         }
         else
         {
-            it->second = std::make_tuple(this->BaseID, this->ColourID, this->ClippedID);
+            it->second = std::make_tuple(this->BaseID, this->ColourID, this->FullColourID);
         }
     }
 }
@@ -433,7 +433,7 @@ Serialize& operator << (Serialize& Destination, const Texture &Source)
 {
     return Destination << Source.BaseID
     << Source.ColourID
-    << Source.ClippedID
+    << Source.FullColourID
     << Source.X
     << Source.Y
     << Source.VX[0]
@@ -491,7 +491,7 @@ DeSerialize& operator >> (DeSerialize& Source, Texture &Destination)
 {
     return Source >> Destination.ID
     >> Destination.ColourID
-    >> Destination.ClippedID
+    >> Destination.FullColourID
     >> Destination.X
     >> Destination.Y
     >> Destination.VX[0]
