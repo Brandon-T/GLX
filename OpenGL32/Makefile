@@ -57,7 +57,6 @@ $(WinDIR)/$(WinOUT): $(ObjFiles)
 	@echo
 	@echo "Linking Object Files.."
 	@mkdir -p $(WinDIR)
-	#@dlltool -k -d $(SrcDIR)/OpenGL32.def -l $(BinDIR)/OpenGL32.a
 	@$(WinGPP) -Wl,--kill-at -d --input-def $(SrcDIR)/OpenGL32.def $(WinDEP) $(WinDIR)/$(WinOUT) $(ObjFiles) $(BitFLG) -lgdi32 -lglu32 -lopengl32
 	
 $(ObjSRC)/%.o: $(SrcDIR)/%.cpp

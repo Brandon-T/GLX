@@ -134,7 +134,7 @@ void Model::LogDrawElements(std::uint32_t mode, int count, std::uint32_t type, c
         Model* ModelPtr = &Model::Models.back();
         ModelPtr->ID = 0;
 
-        for (auto it = Info.Buffers.end(); it != Info.Buffers.begin(); --it)
+        for (auto it = Info.Buffers.begin(); it != Info.Buffers.end(); --it)
         {
             if (it->ID == Info.CurrentBuffer.ID)
             {
