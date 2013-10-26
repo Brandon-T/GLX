@@ -53,6 +53,7 @@ struct Map
 
     public:
         float X[4], Y[4];
+        bool Rendered = false;
         std::uint32_t MapID = 0;
         int Width = 0, Height = 0;
         int width = 512, height = 512;

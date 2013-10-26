@@ -53,12 +53,13 @@ void Map::LogBindTexture(std::uint32_t target, GLuint texture)
     glGetTexLevelParameteriv(target, 0, GL_TEXTURE_WIDTH, &Width);
     glGetTexLevelParameteriv(target, 0, GL_TEXTURE_WIDTH, &Height);
 
-    if (MapCount && Width == width && Height == height && (++MapCount == 8))
+    if (MapCount && Width == this->width && Height == this->height && (++MapCount == 8))
     {
         MapCount = 0;
         Pixels.clear();
         Pixels.resize(Width * Height * 4);
         glGetTexImage(target, 0, GL_BGRA, GL_UNSIGNED_BYTE, Pixels.data());
+        this->Rendered = !this->Rendered;
     }
 }
 

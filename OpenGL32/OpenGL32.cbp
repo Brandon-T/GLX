@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="OpenGL32" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="Debug">
+				<Option output="bin/Debug/OpenGL32" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Debug/" />
+				<Option type="3" />
+				<Option compiler="gcc" />
+				<Option createDefFile="1" />
+				<Option createStaticLib="1" />
+				<Compiler>
+					<Add option="-Wall" />
+					<Add option="-g" />
+					<Add option="-DBUILD_DLL" />
+				</Compiler>
+				<Linker>
+					<Add option="-static" />
+					<Add option="-static-libgcc" />
+					<Add option="-static-libstdc++" />
+					<Add option="-Wl,--enable-stdcall-fixup" />
+					<Add option="-Wl,--kill-at -d --input-def OpenGL32.def" />
+					<Add library="user32" />
+					<Add library="gdi32" />
+				</Linker>
+			</Target>
+			<Target title="Release">
+				<Option output="bin/Release/OpenGL32" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Release/" />
+				<Option type="3" />
+				<Option compiler="gcc" />
+				<Option createDefFile="1" />
+				<Option createStaticLib="1" />
+				<Compiler>
+					<Add option="-O2" />
+					<Add option="-Wall" />
+					<Add option="-m32" />
+					<Add option="-DBUILD_DLL" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+					<Add option="-static" />
+					<Add option="-static-libgcc" />
+					<Add option="-static-libstdc++" />
+					<Add option="-Wl,--enable-stdcall-fixup" />
+					<Add option="-Wl,--kill-at -d --input-def src/OpenGL32.def" />
+					<Add option="-m32" />
+					<Add library="user32" />
+					<Add library="gdi32" />
+					<Add library="OpenGL32" />
+					<Add library="glu32" />
+				</Linker>
+			</Target>
+		</Build>
+		<Unit filename="src/Hooks/BufferHook.cpp" />
+		<Unit filename="src/Hooks/BufferHook.hpp" />
+		<Unit filename="src/Hooks/Communication.cpp" />
+		<Unit filename="src/Hooks/Communication.hpp" />
+		<Unit filename="src/Hooks/Debugger.cpp" />
+		<Unit filename="src/Hooks/Debugger.hpp" />
+		<Unit filename="src/Hooks/Exports.cpp" />
+		<Unit filename="src/Hooks/Exports.hpp" />
+		<Unit filename="src/Hooks/Graphics.cpp" />
+		<Unit filename="src/Hooks/Graphics.hpp" />
+		<Unit filename="src/Hooks/Hooks.cpp" />
+		<Unit filename="src/Hooks/Hooks.hpp" />
+		<Unit filename="src/Hooks/Math.cpp" />
+		<Unit filename="src/Hooks/Math.hpp" />
+		<Unit filename="src/Hooks/MathEx.hpp" />
+		<Unit filename="src/Hooks/Platform.cpp" />
+		<Unit filename="src/Hooks/Platform.hpp" />
+		<Unit filename="src/Hooks/Render.cpp" />
+		<Unit filename="src/Hooks/Render.hpp" />
+		<Unit filename="src/Hooks/SMARTPlugin.hpp" />
+		<Unit filename="src/Hooks/Serialization.cpp" />
+		<Unit filename="src/Hooks/Serialization.hpp" />
+		<Unit filename="src/Hooks/SharedMemory.cpp" />
+		<Unit filename="src/Hooks/SharedMemory.hpp" />
+		<Unit filename="src/Hooks/SmartJNI.cpp" />
+		<Unit filename="src/Hooks/Structures.cpp" />
+		<Unit filename="src/Hooks/Structures.hpp" />
+		<Unit filename="src/Hooks/System.hpp" />
+		<Unit filename="src/Imaging/LodePNG.cpp" />
+		<Unit filename="src/Imaging/LodePNG.h" />
+		<Unit filename="src/OpenGL32.def" />
+		<Unit filename="src/main.cpp" />
+		<Extensions>
+			<code_completion />
+			<envvars />
+			<debugger />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>

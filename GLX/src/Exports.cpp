@@ -156,21 +156,38 @@ Matrices* GLXMatrices()
 std::uint8_t* GLXMap(int &Width, int &Height, float X[4], float Y[4])
 {
     map.Pixels.clear();
-    std::memset(&map, 0, (sizeof(float) * 8) + (sizeof(int) * 3));
+    std::memset(&map.X[0], 0, (sizeof(float) * 8) + (sizeof(int) * 3));
     char* Data = static_cast<char*>(SharedHookData->GetDataPointer());
     WritePointer(Data, GLX_Map);
-    WritePointer(Data, Width);
-    WritePointer(Data, Height);
+    WritePointer(Data, map.Rendered);
+
     SharedHookData->SetEventSignal(RequestEventName, true);
     if (SharedHookData->OpenSingleEvent(ReplyEventName, true, true) == WAIT_OBJECT_0)
     {
-        DeSerialize D(Data, SharedHookSize);
-        D >> map;
+        bool Rendered = ReadPointer<bool>(Data);
+
+        if (Rendered == map.Rendered)
+        {
+            Width = map.Width;
+            Height = map.Height;
+            for (int I = 0; I < 4; ++I)
+            {
+                X[I] = ReadPointer<float>(Data);
+                Y[I] = ReadPointer<float>(Data);
+            }
+        }
+        else
+        {
+            DeSerialize D(Data, SharedHookSize);
+            D >> map;
+            Width = map.Width;
+            Height = map.Height;
+            std::memcpy(&X[0], &map.X[0], sizeof(float) * 4);
+            std::memcpy(&Y[0], &map.Y[0], sizeof(float) * 4);
+        }
+
+        map.Rendered = Rendered;
         SharedHookData->SetEventSignal(ReplyEventName, false);
-        Width = map.Width;
-        Height = map.Height;
-        std::memcpy(&X[0], &map.X[0], sizeof(float) * 4);
-        std::memcpy(&Y[0], &map.Y[0], sizeof(float) * 4);
         return map.Pixels.data();
     }
     SharedHookData->SetEventSignal(ReplyEventName, false);

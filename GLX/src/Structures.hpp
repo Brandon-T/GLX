@@ -41,6 +41,7 @@ typedef struct
 
 typedef struct
 {
+    bool Rendered;
     float X[4], Y[4];
     int Width, Height;
     std::uint32_t MapID;

@@ -132,10 +132,23 @@ void ProcessRequests()
 
                 case GLX_Map:
                 {
-                    InfoLogger.map.width = ReadPointer<int>(Data);
-                    InfoLogger.map.height = ReadPointer<int>(Data);
-                    Serialize S(Data, SharedHookSize);
-                    S << InfoLogger.map;
+                    bool Rendered = ReadPointer<bool>(Data);
+                    if (Rendered == InfoLogger.map.Rendered)
+                    {
+                        WritePointer(Data, Rendered);
+                        for (int I = 0; I < 4; ++I)
+                        {
+                            WritePointer(Data, InfoLogger.map.X[I]);
+                            WritePointer(Data, InfoLogger.map.Y[I]);
+                        }
+                    }
+                    else
+                    {
+                        WritePointer(Data, InfoLogger.map.Rendered);
+                        Serialize S(Data, SharedHookSize);
+                        S << InfoLogger.map;
+                    }
+
                     SharedHookData->SetEventSignal(RequestEventName, false);
                     SharedHookData->SetEventSignal(ReplyEventName, true);
                 }
