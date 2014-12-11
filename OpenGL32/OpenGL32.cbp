@@ -15,17 +15,11 @@
 				<Option createStaticLib="1" />
 				<Compiler>
 					<Add option="-Wall" />
-					<Add option="-g" />
 					<Add option="-DBUILD_DLL" />
+					<Add option="-g" />
 				</Compiler>
 				<Linker>
-					<Add option="-static" />
-					<Add option="-static-libgcc" />
-					<Add option="-static-libstdc++" />
-					<Add option="-Wl,--enable-stdcall-fixup" />
-					<Add option="-Wl,--kill-at -d --input-def OpenGL32.def" />
 					<Add library="user32" />
-					<Add library="gdi32" />
 				</Linker>
 			</Target>
 			<Target title="Release">
@@ -37,27 +31,26 @@
 				<Option createStaticLib="1" />
 				<Compiler>
 					<Add option="-O2" />
+					<Add option="-std=c++11" />
 					<Add option="-Wall" />
 					<Add option="-m32" />
 					<Add option="-DBUILD_DLL" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
+					<Add option="-m32" />
 					<Add option="-static" />
 					<Add option="-static-libgcc" />
 					<Add option="-static-libstdc++" />
 					<Add option="-Wl,--enable-stdcall-fixup" />
 					<Add option="-Wl,--kill-at -d --input-def src/OpenGL32.def" />
-					<Add option="-m32" />
 					<Add library="user32" />
-					<Add library="gdi32" />
-					<Add library="OpenGL32" />
+					<Add library="opengl32" />
 					<Add library="glu32" />
+					<Add library="gdi32" />
 				</Linker>
 			</Target>
 		</Build>
-		<Unit filename="src/Hooks/BufferHook.cpp" />
-		<Unit filename="src/Hooks/BufferHook.hpp" />
 		<Unit filename="src/Hooks/Communication.cpp" />
 		<Unit filename="src/Hooks/Communication.hpp" />
 		<Unit filename="src/Hooks/Debugger.cpp" />

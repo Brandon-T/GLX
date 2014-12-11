@@ -68,6 +68,8 @@ extern "C" void __stdcall GLHook_glMultiTexCoord2fARB(GLenum target, GLfloat s, 
 
 extern "C" void __stdcall GLHook_glNewList(GLuint list, GLenum mode);
 
+extern "C" void __stdcall GLHook_glPixelStorei(GLenum pname, GLint para);
+
 extern "C" void __stdcall GLHook_glPopMatrix(void);
 
 extern "C" void __stdcall GLHook_glTexCoord2f(GLfloat s,  GLfloat t);

@@ -47,9 +47,9 @@ struct Matrices
 struct Map
 {
     private:
-        bool MapBound = false;
+        bool MapBound = false, stored = false;
         int VertexCount = 0;
-        std::uint32_t MapCount = 0, TextureID = 0;
+        std::uint32_t MapCount = 0, TextureID = 0, Target = 0;
 
     public:
         float X[4], Y[4];
@@ -59,8 +59,10 @@ struct Map
         int width = 512, height = 512;
         std::vector<std::uint8_t> Pixels;
 
+        void Store();
         void LogBindTexture(std::uint32_t target, std::uint32_t texture);
-        void Log2DImageTexture(std::uint32_t target, int width, int height);
+        void Log2DImageTexture(std::uint32_t target, int width, int height, const void* pixels);
+        void LogPixelStore(std::uint32_t flag, std::uint32_t size);
         void LogVertices(float x, float y);
         inline void Reset() {Width = Height = VertexCount = TextureID = MapBound = 0;}
 };

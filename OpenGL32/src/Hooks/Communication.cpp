@@ -132,19 +132,17 @@ void ProcessRequests()
 
                 case GLX_Map:
                 {
-                    bool Rendered = ReadPointer<bool>(Data);
-                    if (Rendered == InfoLogger.map.Rendered)
+                    WritePointer(Data, InfoLogger.map.Rendered);
+
+                    for (int I = 0; I < 4; ++I)
                     {
-                        WritePointer(Data, Rendered);
-                        for (int I = 0; I < 4; ++I)
-                        {
-                            WritePointer(Data, InfoLogger.map.X[I]);
-                            WritePointer(Data, InfoLogger.map.Y[I]);
-                        }
+                        WritePointer(Data, InfoLogger.map.X[I]);
+                        WritePointer(Data, InfoLogger.map.Y[I]);
                     }
-                    else
+
+                    if (InfoLogger.map.Rendered)
                     {
-                        WritePointer(Data, InfoLogger.map.Rendered);
+                        InfoLogger.map.Store();
                         Serialize S(Data, SharedHookSize);
                         S << InfoLogger.map;
                     }

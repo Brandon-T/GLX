@@ -1851,11 +1851,6 @@ extern "C" __stdcall void GLHook_glPixelStoref(GLenum pname, GLfloat param)
 	ptr_glPixelStoref(pname, param);
 }
 
-extern "C" __stdcall void GLHook_glPixelStorei(GLenum pname, GLint para)
-{
-	ptr_glPixelStorei(pname, para);
-}
-
 extern "C" __stdcall void GLHook_glPixelTransferf(GLenum pname, GLfloat param)
 {
 	ptr_glPixelTransferf(pname, param);

@@ -46,29 +46,61 @@ void Matrices::LogMatrix()
     }
 }
 
-void Map::LogBindTexture(std::uint32_t target, GLuint texture)
+void Map::Store()
 {
-    TextureID = texture;
-    MapBound = (MapID != 0 && texture == MapID);
-    glGetTexLevelParameteriv(target, 0, GL_TEXTURE_WIDTH, &Width);
-    glGetTexLevelParameteriv(target, 0, GL_TEXTURE_WIDTH, &Height);
-
-    if (MapCount && Width == this->width && Height == this->height && (++MapCount == 8))
+    if (!stored)
     {
-        MapCount = 0;
         Pixels.clear();
-        Pixels.resize(Width * Height * 4);
-        glGetTexImage(target, 0, GL_BGRA, GL_UNSIGNED_BYTE, Pixels.data());
-        this->Rendered = !this->Rendered;
+        Pixels.resize(width * height * 4);
+
+        bool GLTexture2D = glIsEnabled(GL_TEXTURE_2D);
+        bool GLRectangleTexture = glIsEnabled(GL_TEXTURE_RECTANGLE);
+
+        glEnable(Target);
+        glBindTexture(Target, MapID);
+        glGetTexImage(Target, 0, GL_BGRA, GL_UNSIGNED_BYTE, Pixels.data());
+        if (!GLTexture2D) glDisable(GL_TEXTURE_2D);
+        if (!GLRectangleTexture) glDisable(GL_TEXTURE_RECTANGLE);
+
+        glBindTexture(GLTexture2D ? GL_TEXTURE_2D : GL_TEXTURE_RECTANGLE, TextureID);
+        stored = true;
     }
 }
 
-void Map::Log2DImageTexture(std::uint32_t target, int width, int height)
+void Map::LogBindTexture(std::uint32_t target, GLuint texture)
 {
-    if (width == this->width && height == this->height)
+    Target = target;
+    TextureID = texture;
+    MapBound = (MapID != 0 && texture == MapID);
+
+    if (MapBound && MapCount > 0)
+    {
+        MapCount = 0;
+        this->Rendered = true;
+        stored = false;
+
+        std::cout<<"MapID Bind: "<<MapID<<"\n";
+        std::flush(std::cout);
+    }
+}
+
+void Map::Log2DImageTexture(std::uint32_t target, int width, int height, const void* pixels)
+{
+    if (width == this->width && height == this->height && MapID != 0 && MapID == TextureID)
     {
         ++MapCount;
+        std::cout<<"MapID Image: "<<MapID<<"\n";
+        std::flush(std::cout);
+    }
+}
+
+void Map::LogPixelStore(std::uint32_t flag, std::uint32_t size)
+{
+    if (flag == GL_UNPACK_ROW_LENGTH && size == 512)
+    {
         MapID = TextureID;
+        std::cout<<"MapID Pixels: "<<MapID<<"\n";
+        std::flush(std::cout);
     }
 }
 

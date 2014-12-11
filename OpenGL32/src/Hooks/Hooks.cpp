@@ -162,6 +162,12 @@ void GLHook_glNewList(GLuint list, GLenum mode)
 	ptr_glNewList(list, mode);
 }
 
+void GLHook_glPixelStorei(GLenum pname, GLint para)
+{
+    InfoLogger.map.LogPixelStore(pname, para);
+	ptr_glPixelStorei(pname, para);
+}
+
 void GLHook_glPopMatrix(void)
 {
     InfoLogger.model.LogPopMatrix();
@@ -176,7 +182,7 @@ void GLHook_glTexCoord2f(GLfloat s,  GLfloat t)
 
 void GLHook_glTexImage2D(GLenum target, GLint level, GLint internalformat, GLsizei width, GLsizei height, GLint border, GLint format, GLenum type, const GLvoid *pixels)
 {
-    InfoLogger.map.Log2DImageTexture(target, width, height);
+    InfoLogger.map.Log2DImageTexture(target, width, height, pixels);
     InfoLogger.texture.Log2DImageTexture(target, pixels, width, height);
 	ptr_glTexImage2D(target, level, internalformat, width, height, border, format, type, pixels);
 }
