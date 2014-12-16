@@ -49,7 +49,7 @@ struct Map
     private:
         bool MapBound = false, stored = false;
         int VertexCount = 0;
-        std::uint32_t MapCount = 0, TextureID = 0, Target = 0;
+        std::uint32_t MapCount = 0, TextureID = 0, Target = 0, PossibleID = 0;
 
     public:
         float X[4], Y[4];

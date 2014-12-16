@@ -72,6 +72,7 @@ void Map::LogBindTexture(std::uint32_t target, GLuint texture)
     Target = target;
     TextureID = texture;
     MapBound = (MapID != 0 && texture == MapID);
+    PossibleID = 0;
 
     if (MapBound && MapCount > 0)
     {
@@ -86,9 +87,10 @@ void Map::LogBindTexture(std::uint32_t target, GLuint texture)
 
 void Map::Log2DImageTexture(std::uint32_t target, int width, int height, const void* pixels)
 {
-    if (width == this->width && height == this->height && MapID != 0 && MapID == TextureID)
+    if (width == this->width && height == this->height && PossibleID != 0 && PossibleID == TextureID)
     {
         ++MapCount;
+        MapID = TextureID;
         std::cout<<"MapID Image: "<<MapID<<"\n";
         std::flush(std::cout);
     }
@@ -98,8 +100,8 @@ void Map::LogPixelStore(std::uint32_t flag, std::uint32_t size)
 {
     if (flag == GL_UNPACK_ROW_LENGTH && size == 512)
     {
-        MapID = TextureID;
-        std::cout<<"MapID Pixels: "<<MapID<<"\n";
+        PossibleID = TextureID;
+        std::cout<<"MapID Pixels(Possible): "<<PossibleID<<"\n";
         std::flush(std::cout);
     }
 }
@@ -251,6 +253,7 @@ void Texture::LogVertices(int X, int Y)
         this->Y = (this->VY[0] + this->VY[2]) / 2;
         if (this->BaseID != 0)
             Textures.push_back(*this);
+        this->Found = false;  //ADDED 2014-12-15 5:46PM to hook compass and special animated textures.
         this->Count = 0;
     }
 }

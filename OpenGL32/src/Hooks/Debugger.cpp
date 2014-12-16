@@ -109,7 +109,7 @@ void DebugGraphics::Draw()
 
             glColor4f(0.0f, 0.0f, 0.0f, 1.0f);
             Renderer->DrawRect(HudX, HudY, MaxWidth, MaxHeight, false);
-            Renderer->Print(70, TextY, 1.0f, 1.0f, 1.0f, "GLX v3.5");
+            Renderer->Print(70, TextY, 1.0f, 1.0f, 1.0f, "GLX v3.7");
 
             glColor4f(0.0f, 0.0f, 0.0f, 1.0f);
             TextY += (TextLn - 2);
