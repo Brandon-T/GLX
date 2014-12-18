@@ -196,14 +196,14 @@ void GLHook_glTranslatef(GLfloat x, GLfloat y, GLfloat z)
 void GLHook_glVertex2f(GLfloat x, GLfloat y)
 {
     InfoLogger.map.LogVertices(x, y);
-    InfoLogger.texture.LogVertices(x, y); //ADDED 2014-12-15 5:46PM to hook compass and special animated textures.
+    InfoLogger.texture.LogVerticesF(x, y); //ADDED 2014-12-17 10:40PM to hook compass and special animated textures.
 	ptr_glVertex2f(x, y);
 }
 
 void GLHook_glVertex2i(GLint x, GLint y)
 {
     InfoLogger.font.LogVertices(x, y);
-    InfoLogger.texture.LogVertices(x, y);
+    InfoLogger.texture.LogVerticesI(x, y);
 	ptr_glVertex2i(x, y);
 }
 

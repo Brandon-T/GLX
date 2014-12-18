@@ -120,7 +120,8 @@ struct Texture
         static std::multimap<std::uint32_t, std::tuple<std::uint32_t, std::uint32_t, std::uint32_t>> IDMap;
 
         void LogBindTexture(std::uint32_t target, std::uint32_t texture);
-        void LogVertices(int X, int Y);
+        void LogVerticesF(float X, float Y);
+        void LogVerticesI(int X, int Y);
         void LogActiveTexture(std::uint32_t texture);
         void Log2DImageTexture(std::uint32_t Target, const void* Pixels, std::size_t Width, std::size_t Height);
 };

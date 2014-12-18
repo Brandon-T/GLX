@@ -232,7 +232,7 @@ void Texture::LogBindTexture(std::uint32_t target, std::uint32_t texture)
     }
 }
 
-void Texture::LogVertices(int X, int Y)
+void Texture::LogVerticesF(float X, float Y) //ADDED 2014-12-17 10:40PM to hook compass and special animated textures.
 {
     if (this->Found && (++Count < 5))
     {
@@ -253,7 +253,32 @@ void Texture::LogVertices(int X, int Y)
         this->Y = (this->VY[0] + this->VY[2]) / 2;
         if (this->BaseID != 0)
             Textures.push_back(*this);
-        this->Found = false;  //ADDED 2014-12-15 5:46PM to hook compass and special animated textures.
+        this->Found = false;
+        this->Count = 0;
+    }
+}
+
+void Texture::LogVerticesI(int X, int Y)
+{
+    if (this->Found && (++Count < 5))
+    {
+        this->VX[Count - 1] = X;
+        this->VY[Count - 1] = Y;
+    }
+
+    if (this->Found && Count == 4)
+    {
+        if (ActiveTexture != GL_TEXTURE0)
+        {
+            ActiveTexture = 0;
+            this->ID = Texture::ActiveTextures[0];
+            this->BaseID = Texture::ActiveTextures[1];
+            this->ColourID = Texture::ActiveTextures[2];
+        }
+        this->X = (this->VX[0] + this->VX[2]) / 2;
+        this->Y = (this->VY[0] + this->VY[2]) / 2;
+        if (this->BaseID != 0)
+            Textures.push_back(*this);
         this->Count = 0;
     }
 }
