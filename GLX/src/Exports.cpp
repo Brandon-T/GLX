@@ -30,17 +30,17 @@ char* Exports[] = {
     (char*)"GLXImagePointer", (char*)"Function GLXImagePointer: Pointer;",
     (char*)"GLXDebugPointer", (char*)"Function GLXDebugPointer: Pointer;",
     (char*)"GLXMapHooks", (char*)"Function GLXMapHooks(ProcessID: Integer): Boolean;",
-    (char*)"GLXViewPort", (char*)"Procedure GLXViewPort(var X1, Y1, X2, Y2: Integer);",
+    (char*)"GLXViewPort", (char*)"Function GLXViewPort(var X1, Y1, X2, Y2: Integer): Boolean;",
     (char*)"GLXTextures", (char*)"Function GLXTextures(var Size: Cardinal): Pointer;",
     (char*)"GLXModels", (char*)"Function GLXModels(var Size: Cardinal): Pointer;",
     (char*)"GLXFonts", (char*)"Function GLXFonts(var Size: Cardinal): Pointer;",
     (char*)"GLXMatrices", (char*)"Function GLXMatrices: Pointer;",
     (char*)"GLXMap", (char*)"Function GLXMap(var Width, Height: Integer; var X, Y: array[0..3] of Single): Pointer;",
-    (char*)"GLXMapCoords", (char*)"Procedure GLXMapCoords(var X, Y: array[0..3] of single);",
-    (char*)"GLXDebug", (char*)"Procedure GLXDebug(Mode, TextureID, ColourID, FullColourID: Cardinal; Tolerance, X1, Y1, X2, Y2: Integer);",
-    (char*)"GLXSetColourCapture", (char*)"Procedure GLXSetColourCapture(Enable: Boolean);",
-    (char*)"GLXSetFontCapture", (char*)"Procedure GLXSetFontCapture(Enable: Boolean);",
-    (char*)"GLXSaveTexture", (char*)"Procedure GLXSaveTextures;"
+    (char*)"GLXMapCoords", (char*)"Function GLXMapCoords(var X, Y: array[0..3] of single): Boolean;",
+    (char*)"GLXDebug", (char*)"Function GLXDebug(Mode, TextureID, ColourID, FullColourID: Cardinal; Tolerance, X1, Y1, X2, Y2: Integer): Boolean;",
+    (char*)"GLXSetColourCapture", (char*)"Function GLXSetColourCapture(Enable: Boolean): Boolean;",
+    (char*)"GLXSetFontCapture", (char*)"Function GLXSetFontCapture(Enable: Boolean): Boolean;",
+    (char*)"GLXSaveTexture", (char*)"Function GLXSaveTextures: Boolean;"
 };
 
 bool GLXSetup(int ProcessID)
@@ -63,20 +63,23 @@ void* GLXDebugPointer()
     return SharedImageData ? reinterpret_cast<std::uint8_t*>(SharedImageData->GetDataPointer()) + SharedImageSize : nullptr;
 }
 
-void GLXViewPort(int &X1, int &Y1, int &X2, int &Y2)
+bool GLXViewPort(int &X1, int &Y1, int &X2, int &Y2)
 {
+    bool result = false;
     X1 = X2 = Y1 = Y2 = 0;
     char* Data = static_cast<char*>(SharedHookData->GetDataPointer());
     WritePointer(Data, GLX_ViewPort);
     SharedHookData->SetEventSignal(RequestEventName, true);
-    if (SharedHookData->OpenSingleEvent(ReplyEventName, true, true) == WAIT_OBJECT_0)
+    if (SharedHookData->OpenSingleEvent(ReplyEventName, true, true, EVENT_ALL_ACCESS, EVENT_TIMEOUT) == WAIT_OBJECT_0)
     {
         X1 = ReadPointer<int>(Data);
         Y1 = ReadPointer<int>(Data);
         X2 = ReadPointer<int>(Data);
         Y2 = ReadPointer<int>(Data);
+        result = true;
     }
     SharedHookData->SetEventSignal(ReplyEventName, false);
+    return result;
 }
 
 Texture* GLXTextures(std::uint32_t &Size)
@@ -86,7 +89,7 @@ Texture* GLXTextures(std::uint32_t &Size)
     char* Data = static_cast<char*>(SharedHookData->GetDataPointer());
     WritePointer(Data, GLX_Textures);
     SharedHookData->SetEventSignal(RequestEventName, true);
-    if (SharedHookData->OpenSingleEvent(ReplyEventName, true, true) == WAIT_OBJECT_0)
+    if (SharedHookData->OpenSingleEvent(ReplyEventName, true, true, EVENT_ALL_ACCESS, EVENT_TIMEOUT) == WAIT_OBJECT_0)
     {
         DeSerialize D(Data, SharedHookSize);
         D >> LoT;
@@ -105,7 +108,7 @@ Model* GLXModels(std::uint32_t &Size)
     char* Data = static_cast<char*>(SharedHookData->GetDataPointer());
     WritePointer(Data, GLX_Models);
     SharedHookData->SetEventSignal(RequestEventName, true);
-    if (SharedHookData->OpenSingleEvent(ReplyEventName, true, true) == WAIT_OBJECT_0)
+    if (SharedHookData->OpenSingleEvent(ReplyEventName, true, true, EVENT_ALL_ACCESS, EVENT_TIMEOUT) == WAIT_OBJECT_0)
     {
         DeSerialize D(Data, SharedHookSize);
         D >> LoM;
@@ -124,7 +127,7 @@ Font* GLXFonts(std::uint32_t &Size)
     char* Data = static_cast<char*>(SharedHookData->GetDataPointer());
     WritePointer(Data, GLX_Fonts);
     SharedHookData->SetEventSignal(RequestEventName, true);
-    if (SharedHookData->OpenSingleEvent(ReplyEventName, true, true) == WAIT_OBJECT_0)
+    if (SharedHookData->OpenSingleEvent(ReplyEventName, true, true, EVENT_ALL_ACCESS, EVENT_TIMEOUT) == WAIT_OBJECT_0)
     {
         DeSerialize D(Data, SharedHookSize);
         D >> LoF;
@@ -142,7 +145,7 @@ Matrices* GLXMatrices()
     char* Data = static_cast<char*>(SharedHookData->GetDataPointer());
     WritePointer(Data, GLX_Matrices);
     SharedHookData->SetEventSignal(RequestEventName, true);
-    if (SharedHookData->OpenSingleEvent(ReplyEventName, true, true) == WAIT_OBJECT_0)
+    if (SharedHookData->OpenSingleEvent(ReplyEventName, true, true, EVENT_ALL_ACCESS, EVENT_TIMEOUT) == WAIT_OBJECT_0)
     {
         DeSerialize D(Data, SharedHookSize);
         D >> matrices;
@@ -161,7 +164,7 @@ std::uint8_t* GLXMap(int &Width, int &Height, float X[4], float Y[4])
     WritePointer(Data, GLX_Map);
 
     SharedHookData->SetEventSignal(RequestEventName, true);
-    if (SharedHookData->OpenSingleEvent(ReplyEventName, true, true) == WAIT_OBJECT_0)
+    if (SharedHookData->OpenSingleEvent(ReplyEventName, true, true, EVENT_ALL_ACCESS, EVENT_TIMEOUT) == WAIT_OBJECT_0)
     {
         bool Rendered = ReadPointer<bool>(Data);
         for (int I = 0; I < 4; ++I)
@@ -182,25 +185,28 @@ std::uint8_t* GLXMap(int &Width, int &Height, float X[4], float Y[4])
     return nullptr;
 }
 
-void GLXMapCoords(float X[4], float Y[4])
+bool GLXMapCoords(float X[4], float Y[4])
 {
+    bool result = false;
     std::memset(X, 0, sizeof(float) * 4);
     std::memset(Y, 0, sizeof(float) * 4);
     char* Data = static_cast<char*>(SharedHookData->GetDataPointer());
     WritePointer(Data, GLX_MapCoords);
     SharedHookData->SetEventSignal(RequestEventName, true);
-    if (SharedHookData->OpenSingleEvent(ReplyEventName, true, true) == WAIT_OBJECT_0)
+    if (SharedHookData->OpenSingleEvent(ReplyEventName, true, true, EVENT_ALL_ACCESS, EVENT_TIMEOUT) == WAIT_OBJECT_0)
     {
         for (int I = 0; I < 4; ++I)
         {
             X[I] = ReadPointer<float>(Data);
             Y[I] = ReadPointer<float>(Data);
         }
+        result = true;
     }
     SharedHookData->SetEventSignal(ReplyEventName, false);
+    return result;
 }
 
-void GLXDebug(std::uint32_t Mode, std::uint32_t TextureID, std::uint32_t ColourID, std::uint32_t FullColourID, int Tolerance, int X1, int Y1, int X2, int Y2)
+bool GLXDebug(std::uint32_t Mode, std::uint32_t TextureID, std::uint32_t ColourID, std::uint32_t FullColourID, int Tolerance, int X1, int Y1, int X2, int Y2)
 {
     char* Data = static_cast<char*>(SharedHookData->GetDataPointer());
     WritePointer(Data, GLX_Debug);
@@ -214,45 +220,49 @@ void GLXDebug(std::uint32_t Mode, std::uint32_t TextureID, std::uint32_t ColourI
     WritePointer(Data, X2);
     WritePointer(Data, Y2);
     SharedHookData->SetEventSignal(RequestEventName, true);
-    SharedHookData->OpenSingleEvent(ReplyEventName, true, true);
+    bool result = (SharedHookData->OpenSingleEvent(ReplyEventName, true, true, EVENT_ALL_ACCESS, EVENT_TIMEOUT) == WAIT_OBJECT_0);
     SharedHookData->SetEventSignal(ReplyEventName, false);
+    return result;
 }
 
-void GLXSetFontCapture(bool Enabled)
+bool GLXSetFontCapture(bool Enabled)
 {
     char* Data = static_cast<char*>(SharedHookData->GetDataPointer());
     WritePointer(Data, GLX_FontsEnable);
     WritePointer(Data, Enabled ? 1 : 0);
     SharedHookData->SetEventSignal(RequestEventName, true);
-    SharedHookData->OpenSingleEvent(ReplyEventName, true, true);
+    SharedHookData->OpenSingleEvent(ReplyEventName, true, true, EVENT_ALL_ACCESS, EVENT_TIMEOUT);
     SharedHookData->SetEventSignal(ReplyEventName, false);
 
     SharedHookData->SetEventSignal(RequestEventName, true);
-    SharedHookData->OpenSingleEvent(ReplyEventName, true, true);
+    bool result = (SharedHookData->OpenSingleEvent(ReplyEventName, true, true, EVENT_ALL_ACCESS, EVENT_TIMEOUT) == WAIT_OBJECT_0);
     SharedHookData->SetEventSignal(ReplyEventName, false);
+    return result;
 }
 
-void GLXSetColourCapture(bool Enabled)
+bool GLXSetColourCapture(bool Enabled)
 {
     char* Data = static_cast<char*>(SharedHookData->GetDataPointer());
     WritePointer(Data, GLX_ColourBuffer);
     WritePointer(Data, Enabled ? 1 : 0);
     SharedHookData->SetEventSignal(RequestEventName, true);
-    SharedHookData->OpenSingleEvent(ReplyEventName, true, true);
+    SharedHookData->OpenSingleEvent(ReplyEventName, true, true, EVENT_ALL_ACCESS, EVENT_TIMEOUT);
     SharedHookData->SetEventSignal(ReplyEventName, false);
 
     SharedHookData->SetEventSignal(RequestEventName, true);
-    SharedHookData->OpenSingleEvent(ReplyEventName, true, true);
+    bool result = (SharedHookData->OpenSingleEvent(ReplyEventName, true, true, EVENT_ALL_ACCESS, EVENT_TIMEOUT) == WAIT_OBJECT_0);
     SharedHookData->SetEventSignal(ReplyEventName, false);
+    return result;
 }
 
-void GLXSaveTextures()
+bool GLXSaveTextures()
 {
     char* Data = static_cast<char*>(SharedHookData->GetDataPointer());
     WritePointer(Data, GLX_SaveTexture);
     SharedHookData->SetEventSignal(RequestEventName, true);
-    SharedHookData->OpenSingleEvent(ReplyEventName, true, true);
+    bool result = (SharedHookData->OpenSingleEvent(ReplyEventName, true, true, EVENT_ALL_ACCESS, EVENT_TIMEOUT) == WAIT_OBJECT_0);
     SharedHookData->SetEventSignal(ReplyEventName, false);
+    return result;
 }
 
                                                     /** Internal API **/
