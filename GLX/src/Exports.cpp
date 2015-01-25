@@ -40,7 +40,9 @@ char* Exports[] = {
     (char*)"GLXDebug", (char*)"Function GLXDebug(Mode, TextureID, ColourID, FullColourID: Cardinal; Tolerance, X1, Y1, X2, Y2: Integer): Boolean;",
     (char*)"GLXSetColourCapture", (char*)"Function GLXSetColourCapture(Enable: Boolean): Boolean;",
     (char*)"GLXSetFontCapture", (char*)"Function GLXSetFontCapture(Enable: Boolean): Boolean;",
-    (char*)"GLXSaveTexture", (char*)"Function GLXSaveTextures: Boolean;"
+    (char*)"GLXSaveTexture", (char*)"Function GLXSaveTextures: Boolean;",
+    (char*)"GLXUTF8ToUTF16", (char*)"Function GLXUTF8ToUTF16(UTF8, UTF16: Pointer): Integer;",
+    (char*)"GLXUTF16ToUTF8", (char*)"Function GLXUTF16ToUTF8(UTF16, UTF8: Pointer): Integer;"
 };
 
 bool GLXSetup(int ProcessID)
@@ -263,6 +265,26 @@ bool GLXSaveTextures()
     bool result = (SharedHookData->OpenSingleEvent(ReplyEventName, true, true, EVENT_ALL_ACCESS, EVENT_TIMEOUT) == WAIT_OBJECT_0);
     SharedHookData->SetEventSignal(ReplyEventName, false);
     return result;
+}
+
+int GLXUTF8ToUTF16(char* utf8, wchar_t* utf16)
+{
+    int len = MultiByteToWideChar(CP_UTF8, 0, utf8, -1, NULL, 0);
+    if (utf16 != NULL)
+    {
+        MultiByteToWideChar(CP_UTF8, 0, utf8, -1, utf16, len);
+    }
+    return len;
+}
+
+int GLXUTF16ToUTF8(wchar_t* utf16, char* utf8)
+{
+    int len = WideCharToMultiByte(CP_UTF8, 0, utf16, -1, NULL, 0, 0, 0);
+    if (utf8 != NULL)
+    {
+        WideCharToMultiByte(CP_UTF8, 0, utf16, -1, utf8, len, 0, 0);
+    }
+    return len;
 }
 
                                                     /** Internal API **/

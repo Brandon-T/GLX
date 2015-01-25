@@ -25,7 +25,7 @@
 #include "Structures.hpp"
 #include "SharedMemory.hpp"
 
-#define ExportCount         15
+#define ExportCount         17
 #define SharedImageSize     8294400     //Highest Resolution Support: 1920 x 1080 x sizeof(RGBA)
 #define TotalImageSize      (SharedImageSize * 2)  //Image + DebugImage
 #define SharedHookSize      5000000
@@ -58,6 +58,8 @@ extern "C" bool __declspec(dllexport) GLXDebug(std::uint32_t Mode, std::uint32_t
 extern "C" bool __declspec(dllexport) GLXSetFontCapture(bool Enabled);
 extern "C" bool __declspec(dllexport) GLXSetColourCapture(bool Enabled);
 extern "C" bool __declspec(dllexport) GLXSaveTextures();
+extern "C" int __declspec(dllexport) GLXUTF8ToUTF16(char* utf8, wchar_t* utf16);
+extern "C" int __declspec(dllexport) GLXUTF16ToUTF8(wchar_t* utf16, char* utf8);
 
 extern void GetDesktopResolution(int &width, int &height);
 extern bool CreateSharedMemory(int ProcessID);
