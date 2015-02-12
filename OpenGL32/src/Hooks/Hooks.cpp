@@ -269,12 +269,20 @@ BOOL GLHook_wglSwapBuffers(HDC hdc)
     static Render R(hdc, 8);
     Debugger.SetRenderer(&R);
 
+    glGetIntegerv(GL_VIEWPORT, ViewPort);
+
+    if (Model::ViewPort[0] < 0 || Model::ViewPort[1] < 0 || Model::ViewPort[2] <= 0 || Model::ViewPort[3] <= 0 || Model::ViewPort[2] > ViewPort[2] || Model::ViewPort[3] > ViewPort[3])
+    {
+        memcpy(Model::ViewPort, ViewPort, sizeof(ViewPort));
+    }
+
+    //printf("Viewport: (%d, %d, %d, %d)\n", Model::ViewPort[0], Model::ViewPort[1], Model::ViewPort[2], Model::ViewPort[3]);
+
     if (ColourBufferEnabled)
     {
-        glGetIntegerv(GL_VIEWPORT, ViewPort);
         glPixelStorei(GL_PACK_ALIGNMENT, 4);
         Buffer.resize(ViewPort[2] * ViewPort[3] * 4);
-        glReadPixels(0, 0, ViewPort[2], ViewPort[3], GL_BGRA, GL_UNSIGNED_BYTE, Buffer.data());
+        glReadPixels(ViewPort[0], ViewPort[1], ViewPort[2], ViewPort[3], GL_BGRA, GL_UNSIGNED_BYTE, Buffer.data());
     }
 
     if (SmartGlobal && SmartGlobal->version)

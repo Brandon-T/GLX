@@ -24,6 +24,7 @@ std::vector<Font> Font::Fonts;
 std::vector<Font> Font::RenderedFonts;
 std::vector<Model> Model::Models;
 std::vector<ModelBuffer> ModelBuffer::Buffers;
+std::int32_t Model::ViewPort[4] = {0};
 ModelBuffer ModelBuffer::CurrentBuffer;
 
 void Matrices::LogMatrix()
@@ -186,15 +187,13 @@ void Model::LogPopMatrix()
     if (this->IsRendering)
     {
         float X = 0, Y = 0;
-        int ViewPort[4];
         double ModelViewMatrix[16];
         double ProjectionMatrix[16];
-        glGetIntegerv(GL_VIEWPORT, ViewPort);
         glGetDoublev(GL_MODELVIEW_MATRIX, ModelViewMatrix);
         glGetDoublev(GL_PROJECTION_MATRIX, ProjectionMatrix);
 
         Model* ModelPtr = &Model::Models.back();
-        if (math.WorldToScreen(X, Y, {0, 0, 0}))
+        if (math.WorldToScreen(X, Y, {0, 0, 0}, ViewPort, ModelViewMatrix, ProjectionMatrix))
         {
             ModelPtr->X = X;
             ModelPtr->Y = Y;

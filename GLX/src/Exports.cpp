@@ -68,9 +68,12 @@ void* GLXDebugPointer()
 bool GLXViewPort(int &X1, int &Y1, int &X2, int &Y2)
 {
     bool result = false;
-    X1 = X2 = Y1 = Y2 = 0;
     char* Data = static_cast<char*>(SharedHookData->GetDataPointer());
     WritePointer(Data, GLX_ViewPort);
+    WritePointer(Data, X1);
+    WritePointer(Data, Y1);
+    WritePointer(Data, X2);
+    WritePointer(Data, Y2);
     SharedHookData->SetEventSignal(RequestEventName, true);
     if (SharedHookData->OpenSingleEvent(ReplyEventName, true, true, EVENT_ALL_ACCESS, EVENT_TIMEOUT) == WAIT_OBJECT_0)
     {

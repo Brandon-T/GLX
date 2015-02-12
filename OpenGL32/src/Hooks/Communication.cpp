@@ -83,6 +83,11 @@ void ProcessRequests()
             {
                 case GLX_ViewPort:
                 {
+                    Model::ViewPort[0] = ReadPointer<int>(Data);
+                    Model::ViewPort[1] = ReadPointer<int>(Data);
+                    Model::ViewPort[2] = ReadPointer<int>(Data);
+                    Model::ViewPort[3] = ReadPointer<int>(Data);
+
                     GLint ViewPort[4];
                     glGetIntegerv(GL_VIEWPORT, ViewPort);
                     WritePointer(Data, ViewPort[0]);

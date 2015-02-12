@@ -92,6 +92,7 @@ struct Model
         std::uint32_t ID;
         std::uint32_t Stride;
         std::uint32_t Triangles;
+        static std::int32_t ViewPort[4];
         static std::vector<Model> Models;
 
         void LogBindBuffer(std::uint32_t target, std::uint32_t Buffer);
