@@ -18,6 +18,7 @@
 #include "Exports.hpp"
 
 HINSTANCE hInstance = nullptr;
+unsigned long int EVENT_TIMEOUT = 2000;
 std::unique_ptr<SharedMemory> SharedImageData;
 std::unique_ptr<SharedMemory> SharedHookData;
 std::string SharedImageName = "Local\\GLXImage_";
@@ -42,7 +43,8 @@ char* Exports[] = {
     (char*)"GLXSetFontCapture", (char*)"Function GLXSetFontCapture(Enable: Boolean): Boolean;",
     (char*)"GLXSaveTexture", (char*)"Function GLXSaveTextures: Boolean;",
     (char*)"GLXUTF8ToUTF16", (char*)"Function GLXUTF8ToUTF16(UTF8, UTF16: Pointer): Integer;",
-    (char*)"GLXUTF16ToUTF8", (char*)"Function GLXUTF16ToUTF8(UTF16, UTF8: Pointer): Integer;"
+    (char*)"GLXUTF16ToUTF8", (char*)"Function GLXUTF16ToUTF8(UTF16, UTF8: Pointer): Integer;",
+    (char*)"GLXSetTimeout", (char*)"Procedure GLXSetTimeout(timeout: UInt32);"
 };
 
 bool GLXSetup(int ProcessID)
@@ -288,6 +290,11 @@ int GLXUTF16ToUTF8(wchar_t* utf16, char* utf8)
         WideCharToMultiByte(CP_UTF8, 0, utf16, -1, utf8, len, 0, 0);
     }
     return len;
+}
+
+void GLXSetTimeout(unsigned long int timeout)
+{
+    EVENT_TIMEOUT = timeout;
 }
 
                                                     /** Internal API **/

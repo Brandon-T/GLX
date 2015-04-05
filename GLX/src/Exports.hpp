@@ -25,14 +25,14 @@
 #include "Structures.hpp"
 #include "SharedMemory.hpp"
 
-#define ExportCount         17
+#define ExportCount         18
 #define SharedImageSize     8294400     //Highest Resolution Support: 1920 x 1080 x sizeof(RGBA)
 #define TotalImageSize      (SharedImageSize * 2)  //Image + DebugImage
 #define SharedHookSize      5000000
-#define EVENT_TIMEOUT       2000  //How long a function waits before giving up.
 
 extern char* Exports[];
 extern HINSTANCE hInstance;
+extern unsigned long int EVENT_TIMEOUT;
 
 extern std::string SharedImageName;
 extern std::string SharedHookName;
@@ -60,6 +60,7 @@ extern "C" bool __declspec(dllexport) GLXSetColourCapture(bool Enabled);
 extern "C" bool __declspec(dllexport) GLXSaveTextures();
 extern "C" int __declspec(dllexport) GLXUTF8ToUTF16(char* utf8, wchar_t* utf16);
 extern "C" int __declspec(dllexport) GLXUTF16ToUTF8(wchar_t* utf16, char* utf8);
+extern "C" void __declspec(dllexport) GLXSetTimeout(unsigned long int timeout);
 
 extern void GetDesktopResolution(int &width, int &height);
 extern bool CreateSharedMemory(int ProcessID);
